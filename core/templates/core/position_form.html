@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Добавить позицию</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #222;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        .object-name {
+            color: #6b7280;
+            margin-bottom: 25px;
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        button,
+        .cancel {
+            padding: 10px 18px;
+            border-radius: 7px;
+            font-size: 15px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        button {
+            border: none;
+            background: #2563eb;
+            color: white;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .cancel {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .cancel:hover {
+            background: #e5e7eb;
+        }
+
+        .error {
+            color: #dc2626;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <a
+        href="{% url 'object_detail' object_id=object.id %}"
+        class="back"
+    >
+        ← Вернуться к объекту
+    </a>
+
+    <div class="card">
+
+        <h1>
+            Добавить позицию
+        </h1>
+
+        <div class="object-name">
+            Объект: {{ object.name }}
+        </div>
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            <div class="field">
+
+                {{ form.name.label_tag }}
+
+                {{ form.name }}
+
+                {% if form.name.errors %}
+                    <div class="error">
+                        {{ form.name.errors }}
+                    </div>
+                {% endif %}
+
+            </div>
+
+            <div class="buttons">
+
+                <button type="submit">
+                    Сохранить
+                </button>
+
+                <a
+                    href="{% url 'object_detail' object_id=object.id %}"
+                    class="cancel"
+                >
+                    Отмена
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

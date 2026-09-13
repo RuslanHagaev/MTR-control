@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {% if material_act %}
+            Редактирование АоРПИ
+        {% else %}
+            Новый АоРПИ
+        {% endif %}
+        — MTR-Control
+    </title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background: #f4f6f8;
+            color: #1f2937;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .back {
+            display: inline-flex;
+            align-items: center;
+
+            gap: 6px;
+
+            margin-bottom: 20px;
+
+            color: #2563eb;
+
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .back:hover {
+            color: #1d4ed8;
+        }
+
+        .card {
+            background: white;
+
+            padding: 28px;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 3px 15px rgba(0, 0, 0, 0.05);
+
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            margin: 0 0 8px;
+
+            font-size: 27px;
+        }
+
+        .subtitle {
+            color: #6b7280;
+
+            font-size: 14px;
+
+            margin-bottom: 25px;
+        }
+
+        /* =========================
+           РАЗДЕЛЫ
+           ========================= */
+
+        .section {
+            margin-top: 30px;
+        }
+
+        .section:first-child {
+            margin-top: 0;
+        }
+
+        .section-title {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 18px;
+
+            padding-bottom: 10px;
+
+            border-bottom: 1px solid #e5e7eb;
+
+            font-size: 18px;
+
+            font-weight: 700;
+        }
+
+        .section-number {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            width: 28px;
+            height: 28px;
+
+            border-radius: 8px;
+
+            background: #eff6ff;
+
+            color: #2563eb;
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        /* =========================
+           СЕТКА
+           ========================= */
+
+        .form-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 18px;
+        }
+
+        .form-group {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 7px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-size: 13px;
+
+            font-weight: 600;
+
+            color: #374151;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+
+            padding: 10px 12px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 8px;
+
+            background: white;
+
+            color: #111827;
+
+            font-family: inherit;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition:
+                border-color 0.15s,
+                box-shadow 0.15s;
+        }
+
+        input,
+        select {
+            height: 42px;
+        }
+
+        textarea {
+            min-height: 95px;
+
+            resize: vertical;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px rgba(37, 99, 235, 0.10);
+        }
+
+        .help {
+            color: #9ca3af;
+
+            font-size: 12px;
+        }
+
+        /* =========================
+           CHECKBOX
+           ========================= */
+
+        .checkbox-group {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            min-height: 42px;
+
+            padding: 10px 12px;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 8px;
+
+            background: #f9fafb;
+        }
+
+        .checkbox-group input {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* =========================
+           ОШИБКИ
+           ========================= */
+
+        .errors {
+            padding: 14px;
+
+            margin-bottom: 20px;
+
+            border-radius: 8px;
+
+            background: #fef2f2;
+
+            color: #b91c1c;
+
+            font-size: 14px;
+        }
+
+        .field-error {
+            color: #dc2626;
+
+            font-size: 12px;
+        }
+
+        /* =========================
+           КНОПКИ
+           ========================= */
+
+        .actions {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-top: 30px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .button {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 7px;
+
+            min-height: 42px;
+
+            padding: 10px 18px;
+
+            border-radius: 8px;
+
+            text-decoration: none;
+
+            border: none;
+
+            font-family: inherit;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition:
+                background 0.15s,
+                transform 0.15s;
+        }
+
+        .button:hover {
+            transform: translateY(-1px);
+        }
+
+        .button-primary {
+            background: #2563eb;
+
+            color: white;
+        }
+
+        .button-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .button-secondary {
+            background: #f1f5f9;
+
+            color: #475569;
+        }
+
+        .button-secondary:hover {
+            background: #e2e8f0;
+        }
+
+        /* =========================
+           ФАЙЛ
+           ========================= */
+
+        input[type="file"] {
+            padding: 8px;
+        }
+
+        /* =========================
+           АДАПТИВНОСТЬ
+           ========================= */
+
+        @media (max-width: 750px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            .actions {
+                flex-direction: column-reverse;
+
+                align-items: stretch;
+            }
+
+            .button {
+                width: 100%;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <a
+        href="{% url 'project_code_detail' project_code_id=material.project_code.id %}"
+        class="back"
+    >
+        ← Вернуться к материалу
+    </a>
+
+
+    <div class="card">
+
+        <h1>
+
+            {% if material_act %}
+                ✏ Редактирование АоРПИ
+            {% else %}
+                ＋ Новый АоРПИ
+            {% endif %}
+
+        </h1>
+
+
+        <div class="subtitle">
+
+            Акт о результатах проверки изделий на соответствие
+            технической документации
+
+        </div>
+
+
+        {% if form.non_field_errors %}
+
+            <div class="errors">
+
+                {{ form.non_field_errors }}
+
+            </div>
+
+        {% endif %}
+
+
+        <form
+            method="post"
+            enctype="multipart/form-data"
+        >
+
+            {% csrf_token %}
+
+
+            <!-- =========================================
+                 1. ОСНОВНЫЕ ДАННЫЕ
+                 ========================================= -->
+
+
+            <div class="section">
+
+                <div class="section-title">
+
+                    <span class="section-number">
+                        1
+                    </span>
+
+                    Основные данные акта
+
+                </div>
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        {{ form.number.label_tag }}
+
+                        {{ form.number }}
+
+                        {% for error in form.number.errors %}
+                            <div class="field-error">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        {{ form.date.label_tag }}
+
+                        {{ form.date }}
+
+                        {% for error in form.date.errors %}
+                            <div class="field-error">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        {{ form.status.label_tag }}
+
+                        {{ form.status }}
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 2. ОРГАНИЗАЦИИ
+                 ========================================= -->
+
+
+            <div class="section">
+
+                <div class="section-title">
+
+                    <span class="section-number">
+                        2
+                    </span>
+
+                    Организации
+
+                </div>
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        {{ form.customer.label_tag }}
+
+                        {{ form.customer }}
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        {{ form.contractor.label_tag }}
+
+                        {{ form.contractor }}
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 3. ОБЪЕКТ
+                 ========================================= -->
+
+
+            <div class="section">
+
+                <div class="section-title">
+
+                    <span class="section-number">
+                        3
+                    </span>
+
+                    Объект и проект
+
+                </div>
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        {{ form.object_name.label_tag }}
+
+                        {{ form.object_name }}
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        {{ form.position_name.label_tag }}
+
+                        {{ form.position_name }}
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        {{ form.project_code.label_tag }}
+
+                        {{ form.project_code }}
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        {{ form.construction_section.label_tag }}
+
+                        {{ form.construction_section }}
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        {{ form.project_document.label_tag }}
+
+                        {{ form.project_document }}
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        {{ form.project_document_date.label_tag }}
+
+                        {{ form.project_document_date }}
+
+                    </div>
+
+
+                    <div class="form-group full">
+
+                        {{ form.working_drawings.label_tag }}
+
+                        {{ form.working_drawings }}
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 4. ИЗДЕЛИЯ
+                 ========================================= -->
+
+
+            <div class="section">
+
+                <div class="section-title">
+
+                    <span class="section-number">
+                        4
+                    </span>
+
+                    Изделия
+
+                </div>
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group full">
+
+                        {{ form.product_type.label_tag }}
+
+                        {{ form.product_type }}
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        {{ form.inspection_type.label_tag }}
+
+                        {{ form.inspection_type }}
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        {{ form.product_name.label_tag }}
+
+                        {{ form.product_name }}
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 5. РЕЗУЛЬТАТЫ ПРОВЕРКИ
+                 ========================================= -->
+
+
+            <div class="section">
+
+                <div class="section-title">
+
+                    <span class="section-number">
+                        5
+                    </span>
+
+                    Результаты проверки
+
+                </div>
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        {{ form.geometric_dimensions.label_tag }}
+
+                        {{ form.geometric_dimensions }}
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        {{ form.marking.label_tag }}
+
+                        {{ form.marking }}
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        {{ form.technical_conditions.label_tag }}
+
+                        {{ form.technical_conditions }}
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        {{ form.compliance_result.label_tag }}
+
+                        {{ form.compliance_result }}
+
+                    </div>
+
+
+                    <div class="form-group full">
+
+                        {{ form.working_drawings.label_tag }}
+
+                        {{ form.working_drawings }}
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 6. ДОКУМЕНТАЦИЯ
+                 ========================================= -->
+
+
+            <div class="section">
+
+                <div class="section-title">
+
+                    <span class="section-number">
+                        6
+                    </span>
+
+                    Сопроводительная документация
+
+                </div>
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group full">
+
+                        {{ form.accompanying_documents.label_tag }}
+
+                        {{ form.accompanying_documents }}
+
+                    </div>
+
+
+                    <div class="form-group full">
+
+                        <label>
+                            Документация
+                        </label>
+
+                        <div class="checkbox-group">
+
+                            {{ form.documents_complete }}
+
+                            <span>
+                                Документация в полном комплекте
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 7. МЕХАНИЧЕСКИЕ СВОЙСТВА
+                 ========================================= -->
+
+
+            <div class="section">
+
+                <div class="section-title">
+
+                    <span class="section-number">
+                        7
+                    </span>
+
+                    Механические свойства
+
+                </div>
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        {{ form.mechanical_properties.label_tag }}
+
+                        {{ form.mechanical_properties }}
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        {{ form.mechanical_properties_result.label_tag }}
+
+                        {{ form.mechanical_properties_result }}
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 8. ТРЕБОВАНИЯ И ЗАКЛЮЧЕНИЕ
+                 ========================================= -->
+
+
+            <div class="section">
+
+                <div class="section-title">
+
+                    <span class="section-number">
+                        8
+                    </span>
+
+                    Требования и заключение
+
+                </div>
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        {{ form.project_requirements.label_tag }}
+
+                        {{ form.project_requirements }}
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        {{ form.technical_requirements.label_tag }}
+
+                        {{ form.technical_requirements }}
+
+                    </div>
+
+
+                    <div class="form-group full">
+
+                        {{ form.conclusion.label_tag }}
+
+                        {{ form.conclusion }}
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 9. ПОДПИСАНТЫ
+                 ========================================= -->
+
+
+            <div class="section">
+
+                <div class="section-title">
+
+                    <span class="section-number">
+                        9
+                    </span>
+
+                    Представители и подписанты
+
+                </div>
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        {{ form.contractor_position.label_tag }}
+
+                        {{ form.contractor_position }}
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        {{ form.contractor_representative.label_tag }}
+
+                        {{ form.contractor_representative }}
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        {{ form.contractor_signature_date.label_tag }}
+
+                        {{ form.contractor_signature_date }}
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        {{ form.customer_position.label_tag }}
+
+                        {{ form.customer_position }}
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        {{ form.customer_representative.label_tag }}
+
+                        {{ form.customer_representative }}
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        {{ form.customer_signature_date.label_tag }}
+
+                        {{ form.customer_signature_date }}
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 10. ПОДПИСАННЫЙ ФАЙЛ
+                 ========================================= -->
+
+
+            <div class="section">
+
+                <div class="section-title">
+
+                    <span class="section-number">
+                        10
+                    </span>
+
+                    Подписанный АоРПИ
+
+                </div>
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group full">
+
+                        {{ form.signed_file.label_tag }}
+
+                        {{ form.signed_file }}
+
+                        <div class="help">
+
+                            Если акт уже подписан, загрузите
+                            скан подписанного АоРПИ.
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 КНОПКИ
+                 ========================================= -->
+
+
+            <div class="actions">
+
+
+                <a
+                    href="{% url 'project_code_detail' project_code_id=material.project_code.id %}"
+                    class="button button-secondary"
+                >
+                    Отмена
+                </a>
+
+
+                <button
+                    type="submit"
+                    class="button button-primary"
+                >
+                    💾 Сохранить АоРПИ
+                </button>
+
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

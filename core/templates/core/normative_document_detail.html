@@ -1,0 +1,619 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ document.designation }} — МТР-Контроль</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f4f6f8;
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
+            color: #1f2937;
+        }
+
+        .container {
+            max-width: 1450px;
+            margin: 0 auto;
+            padding: 24px 30px;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .header {
+            min-height: 82px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 18px 24px;
+            margin-bottom: 20px;
+
+            background: linear-gradient(
+                135deg,
+                #1e3a8a,
+                #2563eb
+            );
+
+            border-radius: 15px;
+            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.12);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: white;
+        }
+
+        .brand-logo {
+            width: 46px;
+            height: 46px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(255, 255, 255, 0.16);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .brand-title {
+            font-size: 22px;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .brand-subtitle {
+            margin-top: 4px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.78);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .profile-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            padding: 7px 11px;
+
+            color: white;
+            text-decoration: none;
+
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 10px;
+        }
+
+        .profile-avatar {
+            width: 34px;
+            height: 34px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-name {
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .profile-role {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        /* =========================
+           NAVIGATION
+        ========================= */
+
+        .navigation-buttons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .nav-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+
+            padding: 10px 15px;
+
+            color: #475569;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 9px;
+
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+
+            box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+
+            transition:
+                background 0.15s ease,
+                color 0.15s ease,
+                border-color 0.15s ease,
+                transform 0.15s ease,
+                box-shadow 0.15s ease;
+        }
+
+        .nav-button:hover {
+            color: #1e293b;
+            background: #f8fafc;
+            border-color: #cbd5e1;
+
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 4px 10px rgba(15, 23, 42, 0.09);
+        }
+
+        .home-icon {
+            flex-shrink: 0;
+        }
+
+        /* =========================
+           DOCUMENT
+        ========================= */
+
+        .document-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 26px;
+
+            box-shadow:
+                0 4px 12px rgba(15, 23, 42, 0.06);
+
+            margin-bottom: 22px;
+        }
+
+        .document-type {
+            display: inline-flex;
+            align-items: center;
+
+            padding: 6px 10px;
+
+            background: #eff6ff;
+            color: #1d4ed8;
+
+            border-radius: 7px;
+
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .document-title {
+            margin: 14px 0 8px;
+
+            font-size: 28px;
+            line-height: 1.25;
+            font-weight: 800;
+            color: #111827;
+        }
+
+        .document-designation {
+            margin-bottom: 18px;
+
+            font-size: 17px;
+            font-weight: 700;
+            color: #475569;
+        }
+
+        .document-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .meta-item {
+            padding: 7px 11px;
+
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 7px;
+
+            font-size: 13px;
+            color: #475569;
+        }
+
+        .document-description {
+            padding-top: 18px;
+
+            border-top: 1px solid #e5e7eb;
+
+            font-size: 15px;
+            line-height: 1.65;
+            color: #475569;
+        }
+
+        /* =========================
+           PDF
+        ========================= */
+
+        .pdf-section {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 20px;
+
+            box-shadow:
+                0 4px 12px rgba(15, 23, 42, 0.06);
+        }
+
+        .pdf-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+
+            margin-bottom: 15px;
+        }
+
+        .pdf-title {
+            margin: 0;
+
+            font-size: 18px;
+            font-weight: 800;
+            color: #1f2937;
+        }
+
+        .pdf-open {
+            display: inline-flex;
+            align-items: center;
+
+            padding: 8px 12px;
+
+            color: #2563eb;
+            background: #eff6ff;
+
+            border: 1px solid #dbeafe;
+            border-radius: 8px;
+
+            text-decoration: none;
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .pdf-open:hover {
+            background: #dbeafe;
+        }
+
+        .pdf-viewer {
+            width: 100%;
+            height: 900px;
+
+            display: block;
+
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+
+            background: #f8fafc;
+        }
+
+        .no-file {
+            padding: 50px 20px;
+
+            text-align: center;
+
+            color: #64748b;
+            background: #f8fafc;
+
+            border: 1px dashed #cbd5e1;
+            border-radius: 10px;
+
+            font-size: 15px;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .footer {
+            margin-top: 28px;
+            padding: 18px 5px;
+
+            text-align: center;
+
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 15px;
+            }
+
+            .header {
+                padding: 16px;
+            }
+
+            .profile-info {
+                display: none;
+            }
+
+            .document-card {
+                padding: 20px;
+            }
+
+            .document-title {
+                font-size: 22px;
+            }
+
+            .pdf-section {
+                padding: 12px;
+            }
+
+            .pdf-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .pdf-viewer {
+                height: 650px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <header class="header">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                М
+            </div>
+
+            <div>
+                <div class="brand-title">
+                    МТР-Контроль
+                </div>
+
+                <div class="brand-subtitle">
+                    Система контроля материально-технических ресурсов
+                </div>
+            </div>
+
+        </div>
+
+        {% if user.is_authenticated %}
+            <div class="header-right">
+
+                <a
+                    href="{% url 'profile' %}"
+                    class="profile-link"
+                >
+
+                    <div class="profile-avatar">
+                        {{ user.username|first|upper }}
+                    </div>
+
+                    <div class="profile-info">
+
+                        <div class="profile-name">
+                            {{ user.get_full_name|default:user.username }}
+                        </div>
+
+                        {% if user.profile %}
+                            <div class="profile-role">
+                                {{ user.profile.get_role_display }}
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+                </a>
+
+            </div>
+        {% endif %}
+
+    </header>
+
+
+    <!-- =========================
+         NAVIGATION
+    ========================= -->
+
+    <div class="navigation-buttons">
+
+        <a
+            href="{% url 'normative_documents' %}"
+            class="nav-button"
+        >
+            ← Нормативные документы
+        </a>
+
+        <a
+            href="{% url 'home' %}"
+            class="nav-button nav-home"
+        >
+
+            <svg
+                class="home-icon"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+            >
+                <path
+                    d="M3 10.5L12 3L21 10.5"
+                    stroke="currentColor"
+                    stroke-width="2.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+
+                <path
+                    d="M5.5 9.5V21H18.5V9.5"
+                    stroke="currentColor"
+                    stroke-width="2.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+
+                <path
+                    d="M9.5 21V14H14.5V21"
+                    stroke="currentColor"
+                    stroke-width="2.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+
+            <span>
+                Главная
+            </span>
+
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+         DOCUMENT INFO
+    ========================= -->
+
+    <section class="document-card">
+
+        <div class="document-type">
+            {{ document.get_document_type_display }}
+        </div>
+
+        <h1 class="document-title">
+            {{ document.title }}
+        </h1>
+
+        <div class="document-designation">
+            {{ document.designation }}
+        </div>
+
+        <div class="document-meta">
+
+            {% if document.year %}
+                <div class="meta-item">
+                    <strong>Год:</strong>
+                    {{ document.year }}
+                </div>
+            {% endif %}
+
+            <div class="meta-item">
+                <strong>Тип:</strong>
+                {{ document.get_document_type_display }}
+            </div>
+
+        </div>
+
+        {% if document.description %}
+            <div class="document-description">
+                {{ document.description|linebreaks }}
+            </div>
+        {% endif %}
+
+    </section>
+
+
+    <!-- =========================
+         PDF VIEWER
+    ========================= -->
+
+    <section class="pdf-section">
+
+        <div class="pdf-header">
+
+            <h2 class="pdf-title">
+                Документ
+            </h2>
+
+            {% if document.file %}
+                <a
+                    href="{{ document.file.url }}"
+                    target="_blank"
+                    class="pdf-open"
+                >
+                    Открыть в новой вкладке ↗
+                </a>
+            {% endif %}
+
+        </div>
+
+        {% if document.file %}
+
+            <iframe
+                src="{{ document.file.url }}"
+                class="pdf-viewer"
+                title="{{ document.designation }}"
+            >
+            </iframe>
+
+        {% else %}
+
+            <div class="no-file">
+                Файл нормативного документа пока не загружен.
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+    <footer class="footer">
+        МТР-Контроль
+    </footer>
+
+</div>
+
+</body>
+</html>

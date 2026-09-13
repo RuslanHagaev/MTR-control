@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Вход — МТР-Контроль</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+
+            margin: 0;
+
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background: #f4f6f8;
+
+            color: #1f2937;
+        }
+
+        .login-wrapper {
+
+            width: 100%;
+
+            max-width: 420px;
+
+            padding: 20px;
+        }
+
+        .login-card {
+
+            background: white;
+
+            border-radius: 16px;
+
+            padding: 35px;
+
+            border:
+                1px solid #edf0f3;
+
+            box-shadow:
+                0 10px 35px
+                rgba(0, 0, 0, 0.07);
+        }
+
+        .logo {
+
+            width: 52px;
+
+            height: 52px;
+
+            margin: 0 auto 18px;
+
+            border-radius: 13px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1e3a8a,
+                    #2563eb
+                );
+
+            color: white;
+
+            font-size: 22px;
+
+            font-weight: 700;
+        }
+
+        h1 {
+
+            margin: 0;
+
+            text-align: center;
+
+            font-size: 24px;
+        }
+
+        .subtitle {
+
+            text-align: center;
+
+            margin-top: 7px;
+
+            margin-bottom: 28px;
+
+            color: #94a3b8;
+
+            font-size: 12px;
+        }
+
+        .field {
+
+            margin-bottom: 17px;
+        }
+
+        label {
+
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            color: #475569;
+        }
+
+        input {
+
+            width: 100%;
+
+            padding: 11px 13px;
+
+            border:
+                1px solid #dbe1e8;
+
+            border-radius: 8px;
+
+            outline: none;
+
+            font-size: 13px;
+
+            transition: 0.15s;
+        }
+
+        input:focus {
+
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(37, 99, 235, 0.10);
+        }
+
+        .error {
+
+            background: #fef2f2;
+
+            border:
+                1px solid #fecaca;
+
+            color: #b91c1c;
+
+            padding: 10px 12px;
+
+            border-radius: 8px;
+
+            margin-bottom: 18px;
+
+            font-size: 12px;
+        }
+
+        .login-button {
+
+            width: 100%;
+
+            border: none;
+
+            padding: 11px;
+
+            border-radius: 8px;
+
+            background: #2563eb;
+
+            color: white;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.15s;
+        }
+
+        .login-button:hover {
+
+            background: #1d4ed8;
+        }
+
+        .footer {
+
+            text-align: center;
+
+            margin-top: 22px;
+
+            color: #9ca3af;
+
+            font-size: 10px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="login-wrapper">
+
+    <div class="login-card">
+
+        <div class="logo">
+            М
+        </div>
+
+        <h1>
+            МТР-Контроль
+        </h1>
+
+        <div class="subtitle">
+            Вход в систему контроля МТР
+        </div>
+
+
+        {% if form.errors %}
+
+            <div class="error">
+
+                Неверное имя пользователя или пароль.
+
+            </div>
+
+        {% endif %}
+
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            <div class="field">
+
+                <label for="id_username">
+                    Имя пользователя
+                </label>
+
+                <input
+                    type="text"
+                    name="username"
+                    id="id_username"
+                    autocomplete="username"
+                    required
+                    autofocus
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="id_password">
+                    Пароль
+                </label>
+
+                <input
+                    type="password"
+                    name="password"
+                    id="id_password"
+                    autocomplete="current-password"
+                    required
+                >
+
+            </div>
+
+
+            <input
+                type="hidden"
+                name="next"
+                value="{{ next }}"
+            >
+
+
+            <button
+                type="submit"
+                class="login-button"
+            >
+                Войти
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="footer">
+        МТР-Контроль · Система управления материально-техническими ресурсами
+    </div>
+
+</div>
+
+</body>
+
+</html>

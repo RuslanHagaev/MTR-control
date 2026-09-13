@@ -1,0 +1,355 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {% block title %}
+            MTR-Control
+        {% endblock %}
+    </title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background: #f4f6f8;
+
+            color: #1f2937;
+        }
+
+        /* =========================================
+           ВЕРХНЯЯ ПАНЕЛЬ
+        ========================================= */
+
+        .topbar {
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+
+            height: 64px;
+
+            background: rgba(255, 255, 255, 0.95);
+
+            backdrop-filter: blur(12px);
+
+            border-bottom: 1px solid #e5e7eb;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 28px;
+        }
+
+        .brand {
+            font-size: 20px;
+
+            font-weight: 700;
+
+            color: #111827;
+
+            text-decoration: none;
+        }
+
+        .brand:hover {
+            color: #2563eb;
+        }
+
+        .home-button {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 9px 15px;
+
+            border-radius: 9px;
+
+            background: #f3f4f6;
+
+            color: #374151;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            transition: 0.2s ease;
+        }
+
+        .home-button:hover {
+            background: #e5e7eb;
+
+            color: #111827;
+
+            transform: translateY(-1px);
+        }
+
+        /* =========================================
+           ОСНОВНОЙ КОНТЕЙНЕР
+        ========================================= */
+
+        .page-container {
+            max-width: 1200px;
+
+            margin: 0 auto;
+
+            padding: 30px 20px 50px;
+        }
+
+        /* =========================================
+           НАВИГАЦИЯ НАЗАД
+        ========================================= */
+
+        .breadcrumbs {
+            display: flex;
+
+            align-items: center;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+            margin-bottom: 22px;
+        }
+
+        .back-button {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding: 8px 13px;
+
+            border-radius: 8px;
+
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            color: #4b5563;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 500;
+
+            transition: 0.2s ease;
+        }
+
+        .back-button:hover {
+            border-color: #d1d5db;
+
+            background: #f9fafb;
+
+            color: #111827;
+
+            transform: translateY(-1px);
+        }
+
+        /* =========================================
+           КАРТОЧКИ
+        ========================================= */
+
+        .card {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 14px;
+
+            padding: 24px;
+
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        /* =========================================
+           КНОПКИ
+        ========================================= */
+
+        .button {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 7px;
+
+            padding: 9px 15px;
+
+            border-radius: 9px;
+
+            border: 1px solid transparent;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: all 0.2s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-1px);
+        }
+
+        .button-primary {
+            background: #2563eb;
+
+            color: white;
+        }
+
+        .button-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .button-secondary {
+            background: #f3f4f6;
+
+            color: #374151;
+        }
+
+        .button-secondary:hover {
+            background: #e5e7eb;
+        }
+
+        .button-success {
+            background: #16a34a;
+
+            color: white;
+        }
+
+        .button-success:hover {
+            background: #15803d;
+        }
+
+        .button-danger {
+            background: #dc2626;
+
+            color: white;
+        }
+
+        .button-danger:hover {
+            background: #b91c1c;
+        }
+
+        /* =========================================
+           МОБИЛЬНАЯ ВЕРСИЯ
+        ========================================= */
+
+        @media (max-width: 600px) {
+
+            .topbar {
+                padding: 0 15px;
+            }
+
+            .page-container {
+                padding: 20px 15px 40px;
+            }
+
+            .brand {
+                font-size: 18px;
+            }
+
+            .home-button {
+                padding: 8px 11px;
+            }
+
+            .breadcrumbs {
+                gap: 6px;
+            }
+
+            .back-button {
+                font-size: 13px;
+
+                padding: 7px 10px;
+            }
+
+        }
+
+    </style>
+
+    {% block extra_css %}
+    {% endblock %}
+
+</head>
+
+
+<body>
+
+
+<header class="topbar">
+
+    <a
+        href="{% url 'home' %}"
+        class="brand"
+    >
+        MTR-Control
+    </a>
+
+
+    <a
+        href="{% url 'home' %}"
+        class="home-button"
+    >
+        🏠 Главная
+    </a>
+
+</header>
+
+
+<main class="page-container">
+
+    {% block breadcrumbs %}
+    {% endblock %}
+
+
+    {% block content %}
+    {% endblock %}
+
+</main>
+
+
+{% block extra_js %}
+{% endblock %}
+
+
+</body>
+
+</html>

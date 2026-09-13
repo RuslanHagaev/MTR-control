@@ -1,0 +1,156 @@
+/* =========================================================
+   MTR-CONTROL — MODERN NAVIGATION
+========================================================= */
+
+.navigation-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-bottom: 28px;
+
+    padding: 8px;
+
+    background: rgba(255, 255, 255, 0.82);
+
+    border: 1px solid rgba(229, 231, 235, 0.9);
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 4px 16px rgba(15, 23, 42, 0.05);
+
+    backdrop-filter: blur(10px);
+}
+
+
+/* =========================================================
+   ОБЩАЯ КНОПКА
+========================================================= */
+
+.nav-button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    min-height: 40px;
+
+    padding: 0 15px;
+
+    border-radius: 10px;
+
+    text-decoration: none;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    letter-spacing: -0.1px;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease,
+        border-color 0.18s ease,
+        transform 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+
+/* =========================================================
+   НАЗАД
+========================================================= */
+
+.nav-back {
+    background: transparent;
+
+    color: #475569;
+
+    border: 1px solid transparent;
+}
+
+.nav-back:hover {
+    background: #f8fafc;
+
+    color: #0f172a;
+
+    border-color: #e2e8f0;
+
+    transform: translateX(-2px);
+
+    box-shadow:
+        0 3px 8px rgba(15, 23, 42, 0.06);
+}
+
+.nav-back:active {
+    transform: translateX(0);
+}
+
+
+/* =========================================================
+   ГЛАВНАЯ
+========================================================= */
+
+.nav-home {
+    margin-left: auto;
+
+    background: #111827;
+
+    color: #ffffff;
+
+    border: 1px solid #111827;
+
+    box-shadow:
+        0 4px 10px rgba(15, 23, 42, 0.16);
+}
+
+.nav-home:hover {
+    background: #1f2937;
+
+    color: #ffffff;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 7px 16px rgba(15, 23, 42, 0.20);
+}
+
+.nav-home:active {
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   МОБИЛЬНАЯ ВЕРСИЯ
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .navigation-buttons {
+        padding: 6px;
+
+        gap: 6px;
+
+        border-radius: 12px;
+
+        margin-bottom: 20px;
+    }
+
+    .nav-button {
+        min-height: 38px;
+
+        padding: 0 12px;
+
+        font-size: 13px;
+    }
+
+}

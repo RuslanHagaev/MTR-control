@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Документы — {{ material.name }}
+    </title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px;
+
+            font-family: Arial, sans-serif;
+
+            background-color: #f4f6f8;
+
+            color: #222;
+        }
+
+        .container {
+            max-width: 1000px;
+
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 12px;
+
+            margin-bottom: 20px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .back {
+            display: inline-block;
+
+            margin-bottom: 20px;
+
+            color: #2563eb;
+
+            text-decoration: none;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+        h1 {
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .material-info {
+            color: #6b7280;
+
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+
+            margin-bottom: 6px;
+
+            font-weight: bold;
+        }
+
+        select {
+            width: 100%;
+
+            padding: 10px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 6px;
+
+            font-size: 15px;
+        }
+
+        input[type="file"] {
+            width: 100%;
+
+            padding: 10px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 6px;
+
+            background: #f9fafb;
+        }
+
+        .field {
+            margin-bottom: 18px;
+        }
+
+        .hint {
+            margin-top: 6px;
+
+            color: #6b7280;
+
+            font-size: 13px;
+        }
+
+        .upload-button {
+            padding: 10px 18px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            background-color: #2563eb;
+
+            color: white;
+
+            font-size: 15px;
+
+            cursor: pointer;
+        }
+
+        .upload-button:hover {
+            background-color: #1d4ed8;
+        }
+
+        .document {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 20px;
+
+            padding: 15px 0;
+
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .document:last-child {
+            border-bottom: none;
+        }
+
+        .document-info {
+            min-width: 0;
+
+            flex: 1;
+        }
+
+        .document-name {
+            font-weight: bold;
+
+            margin-bottom: 5px;
+
+            word-break: break-word;
+        }
+
+        .document-type {
+            color: #6b7280;
+
+            font-size: 13px;
+        }
+
+        .actions {
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            flex-shrink: 0;
+        }
+
+        .open,
+        .delete {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            height: 36px;
+
+            padding: 0 12px;
+
+            border-radius: 6px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            text-decoration: none;
+
+            cursor: pointer;
+
+            white-space: nowrap;
+        }
+
+        .open {
+            background-color: #eff6ff;
+
+            color: #2563eb;
+        }
+
+        .open:hover {
+            background-color: #dbeafe;
+        }
+
+        .delete {
+            background-color: #fee2e2;
+
+            color: #dc2626;
+
+            border: none;
+        }
+
+        .delete:hover {
+            background-color: #fecaca;
+        }
+
+        .empty {
+            text-align: center;
+
+            color: #9ca3af;
+
+            padding: 25px;
+        }
+
+        @media (max-width: 700px) {
+
+            .document {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+            .actions {
+                width: 100%;
+            }
+
+            .open,
+            .delete {
+                flex: 1;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- ==================================================
+         ВОЗВРАТ К ОБЪЕКТУ
+         ================================================== -->
+
+    <a
+        href="{% url 'object_detail' object_id=material.project_code.position.object.id %}"
+        class="back"
+    >
+        ← Вернуться к объекту
+    </a>
+
+
+    <!-- ==================================================
+         ИНФОРМАЦИЯ О МАТЕРИАЛЕ
+         ================================================== -->
+
+    <div class="card">
+
+        <h1>
+            Документы материала
+        </h1>
+
+
+        <div class="material-info">
+
+            {{ material.name }}
+
+            · Позиция:
+            {{ material.project_code.position.name }}
+
+            · Шифр:
+            {{ material.project_code.code }}
+
+        </div>
+
+
+        <!-- ==================================================
+             ЗАГРУЗКА ДОКУМЕНТОВ
+             ================================================== -->
+
+        <form
+            method="post"
+            enctype="multipart/form-data"
+        >
+
+            {% csrf_token %}
+
+
+            <div class="field">
+
+                <label>
+                    Тип документа
+                </label>
+
+                {{ document_form.document_type }}
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Файлы
+                </label>
+
+                <input
+                    type="file"
+                    name="files"
+                    multiple
+                >
+
+                <div class="hint">
+                    Можно выбрать несколько файлов одновременно.
+                </div>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="upload-button"
+            >
+                Загрузить документы
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- ==================================================
+         ЗАГРУЖЕННЫЕ ДОКУМЕНТЫ
+         ================================================== -->
+
+    <div class="card">
+
+        <h2>
+            Загруженные документы
+        </h2>
+
+
+        {% for document in documents %}
+
+            <div class="document">
+
+
+                <div class="document-info">
+
+                    <div class="document-name">
+                        {{ document.name }}
+                    </div>
+
+                    <div class="document-type">
+                        {{ document.get_document_type_display }}
+                    </div>
+
+                </div>
+
+
+                <div class="actions">
+
+                    <a
+                        href="{{ document.file.url }}"
+                        target="_blank"
+                        class="open"
+                    >
+                        📄 Открыть
+                    </a>
+
+
+                    <a
+                        href="{% url 'material_document_delete' document_id=document.id %}"
+                        class="delete"
+                    >
+                        🗑 Удалить
+                    </a>
+
+                </div>
+
+
+            </div>
+
+        {% empty %}
+
+            <div class="empty">
+                Документы пока не загружены.
+            </div>
+
+        {% endfor %}
+
+
+    </div>
+
+
+    <!-- ==================================================
+         НАВИГАЦИЯ
+         ================================================== -->
+
+    <div class="card">
+
+        <a
+            href="{% url 'project_code_detail' project_code_id=material.project_code.id %}"
+            class="back"
+        >
+            ← Вернуться к шифру проекта
+        </a>
+
+    </div>
+
+
+</div>
+
+</body>
+
+</html>

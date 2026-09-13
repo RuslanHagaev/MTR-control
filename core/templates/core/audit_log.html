@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>История изменений — МТР-Контроль</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f4f6f8;
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
+            color: #1f2937;
+        }
+
+        .container {
+            max-width: 1450px;
+            margin: 0 auto;
+            padding: 24px 30px;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .header {
+            min-height: 82px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+
+            padding: 18px 24px;
+            margin-bottom: 20px;
+
+            background: linear-gradient(
+                135deg,
+                #1e3a8a,
+                #2563eb
+            );
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 8px 22px rgba(15, 23, 42, 0.12);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: white;
+        }
+
+        .brand-logo {
+            width: 46px;
+            height: 46px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(255, 255, 255, 0.16);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+
+            border-radius: 12px;
+
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .brand-title {
+            font-size: 22px;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .brand-subtitle {
+            margin-top: 4px;
+
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.78);
+        }
+
+        .profile-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            padding: 7px 11px;
+
+            color: white;
+            text-decoration: none;
+
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+
+            border-radius: 10px;
+        }
+
+        .profile-avatar {
+            width: 34px;
+            height: 34px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: rgba(255, 255, 255, 0.2);
+
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-name {
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .profile-role {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        /* =========================
+           NAVIGATION
+        ========================= */
+
+        .navigation-buttons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .nav-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+
+            padding: 10px 15px;
+
+            color: #475569;
+            background: #ffffff;
+
+            border: 1px solid #e2e8f0;
+            border-radius: 9px;
+
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            box-shadow:
+                0 2px 6px rgba(15, 23, 42, 0.06);
+
+            transition:
+                background 0.15s ease,
+                color 0.15s ease,
+                border-color 0.15s ease,
+                transform 0.15s ease,
+                box-shadow 0.15s ease;
+        }
+
+        .nav-button:hover {
+            color: #1e293b;
+            background: #f8fafc;
+            border-color: #cbd5e1;
+
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 4px 10px rgba(15, 23, 42, 0.09);
+        }
+
+        .home-icon {
+            flex-shrink: 0;
+        }
+
+        /* =========================
+           PAGE HEADER
+        ========================= */
+
+        .page-header {
+            margin-bottom: 20px;
+        }
+
+        .page-title {
+            margin: 0;
+
+            font-size: 28px;
+            font-weight: 800;
+            color: #111827;
+        }
+
+        .page-subtitle {
+            margin: 7px 0 0;
+
+            font-size: 14px;
+            color: #64748b;
+        }
+        /* =========================
+        FILTERS
+        ========================= */
+
+        .filters-card {
+            margin-bottom: 20px;
+
+            padding: 18px;
+
+            background: #ffffff;
+
+            border: 1px solid #e2e8f0;
+            border-radius: 15px;
+
+            box-shadow:
+                0 4px 12px rgba(15, 23, 42, 0.06);
+        }
+
+        .filters-form {
+            display: flex;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .filter-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .filter-field label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #64748b;
+        }
+
+        .filter-field input,
+        .filter-field select {
+            height: 38px;
+
+            min-width: 150px;
+
+            padding: 0 10px;
+
+            color: #334155;
+            background: #ffffff;
+
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+
+            font-family: inherit;
+            font-size: 13px;
+
+            outline: none;
+        }
+
+        .filter-field input:focus,
+        .filter-field select:focus {
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px rgba(37, 99, 235, 0.10);
+        }
+
+        .filter-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-button {
+            height: 38px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 0 14px;
+
+            border-radius: 8px;
+
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 700;
+
+            text-decoration: none;
+
+            cursor: pointer;
+        }
+
+        .filter-apply {
+            color: #ffffff;
+            background: #2563eb;
+            border: 1px solid #2563eb;
+        }
+
+        .filter-apply:hover {
+            background: #1d4ed8;
+            border-color: #1d4ed8;
+        }
+
+        .filter-reset {
+            color: #475569;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+        }
+
+        .filter-reset:hover {
+            background: #f8fafc;
+        }
+
+        /* =========================
+           TABLE
+        ========================= */
+
+        .table-card {
+            overflow: hidden;
+
+            background: #ffffff;
+
+            border: 1px solid #e2e8f0;
+            border-radius: 15px;
+
+            box-shadow:
+                0 4px 12px rgba(15, 23, 42, 0.06);
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+
+            min-width: 950px;
+        }
+
+        th {
+            padding: 14px 16px;
+
+            background: #f8fafc;
+
+            border-bottom: 1px solid #e2e8f0;
+
+            color: #64748b;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 14px 16px;
+
+            border-bottom: 1px solid #eef2f7;
+
+            font-size: 14px;
+            vertical-align: top;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .date {
+            color: #64748b;
+            white-space: nowrap;
+            font-size: 13px;
+        }
+
+        .user-name {
+            font-weight: 700;
+            color: #334155;
+        }
+
+        .action-badge {
+            display: inline-flex;
+            align-items: center;
+
+            padding: 5px 9px;
+
+            border-radius: 7px;
+
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .action-create {
+            color: #166534;
+            background: #dcfce7;
+        }
+
+        .action-update {
+            color: #1d4ed8;
+            background: #dbeafe;
+        }
+
+        .action-delete {
+            color: #b91c1c;
+            background: #fee2e2;
+        }
+
+        .action-upload {
+            color: #7e22ce;
+            background: #f3e8ff;
+        }
+
+        .action-sign {
+            color: #0f766e;
+            background: #ccfbf1;
+        }
+
+        .action-other {
+            color: #475569;
+            background: #f1f5f9;
+        }
+
+        .object-type {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .object-name {
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .description {
+            color: #64748b;
+            line-height: 1.45;
+        }
+
+        /* =========================
+           EMPTY
+        ========================= */
+
+        .empty-state {
+            padding: 60px 20px;
+
+            text-align: center;
+
+            color: #64748b;
+        }
+
+        .empty-title {
+            margin-bottom: 6px;
+
+            color: #334155;
+
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .empty-text {
+            font-size: 14px;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .footer {
+            margin-top: 28px;
+            padding: 18px 5px;
+
+            text-align: center;
+
+            color: #94a3b8;
+
+            font-size: 12px;
+        }
+
+        @media (max-width: 700px) {
+
+            .container {
+                padding: 15px;
+            }
+
+            .header {
+                padding: 16px;
+            }
+
+            .profile-info {
+                display: none;
+            }
+
+            .page-title {
+                font-size: 23px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <header class="header">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                М
+            </div>
+
+            <div>
+                <div class="brand-title">
+                    МТР-Контроль
+                </div>
+
+                <div class="brand-subtitle">
+                    Система контроля материально-технических ресурсов
+                </div>
+            </div>
+
+        </div>
+
+        {% if user.is_authenticated %}
+
+            <a
+                href="{% url 'profile' %}"
+                class="profile-link"
+            >
+
+                <div class="profile-avatar">
+                    {{ user.username|first|upper }}
+                </div>
+
+                <div class="profile-info">
+
+                    <div class="profile-name">
+                        {{ user.get_full_name|default:user.username }}
+                    </div>
+
+                    {% if user.profile %}
+                        <div class="profile-role">
+                            {{ user.profile.get_role_display }}
+                        </div>
+                    {% endif %}
+
+                </div>
+
+            </a>
+
+        {% endif %}
+
+    </header>
+
+
+    <!-- =========================
+         NAVIGATION
+    ========================= -->
+
+    <div class="navigation-buttons">
+
+        <a
+            href="{% url 'home' %}"
+            class="nav-button nav-home"
+        >
+
+            <svg
+                class="home-icon"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+            >
+                <path
+                    d="M3 10.5L12 3L21 10.5"
+                    stroke="currentColor"
+                    stroke-width="2.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+
+                <path
+                    d="M5.5 9.5V21H18.5V9.5"
+                    stroke="currentColor"
+                    stroke-width="2.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+
+                <path
+                    d="M9.5 21V14H14.5V21"
+                    stroke="currentColor"
+                    stroke-width="2.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+
+            <span>
+                Главная
+            </span>
+
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+         PAGE HEADER
+    ========================= -->
+
+    <section class="page-header">
+
+        <h1 class="page-title">
+            История изменений
+        </h1>
+
+        <p class="page-subtitle">
+            Журнал действий пользователей в системе МТР-Контроль
+        </p>
+
+    </section>
+    <!-- =========================
+     FILTERS
+    ========================= -->
+
+    <section class="filters-card">
+
+        <form method="get" class="filters-form">
+
+            <div class="filter-field">
+                <label for="date_from">
+                    С даты
+                </label>
+
+                <input
+                    type="date"
+                    id="date_from"
+                    name="date_from"
+                    value="{{ date_from }}"
+                >
+            </div>
+
+
+            <div class="filter-field">
+                <label for="date_to">
+                    По дату
+                </label>
+
+                <input
+                    type="date"
+                    id="date_to"
+                    name="date_to"
+                    value="{{ date_to }}"
+                >
+            </div>
+
+
+            <div class="filter-field">
+                <label for="user">
+                    Пользователь
+                </label>
+
+                <select
+                    id="user"
+                    name="user"
+                >
+
+                    <option value="">
+                        Все пользователи
+                    </option>
+
+                    {% for item in users %}
+
+                        <option
+                            value="{{ item.id }}"
+                            {% if selected_user == item.id|stringformat:"s" %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ item.get_full_name|default:item.username }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+            </div>
+
+
+            <div class="filter-field">
+                <label for="action">
+                    Действие
+                </label>
+
+                <select id="action" name="action">
+                    <option value="">Все действия</option>
+                    <option value="create" {% if selected_action == "create" %}selected{% endif %}>
+                        Создание
+                    </option>
+                    <option value="update" {% if selected_action == "update" %}selected{% endif %}>
+                        Изменение
+                    </option>
+                    <option value="delete" {% if selected_action == "delete" %}selected{% endif %}>
+                        Удаление
+                    </option>
+                    <option value="upload" {% if selected_action == "upload" %}selected{% endif %}>
+                        Загрузка файла
+                    </option>
+                    <option value="sign" {% if selected_action == "sign" %}selected{% endif %}>
+                        Подписание
+                    </option>
+                    <option value="other" {% if selected_action == "other" %}selected{% endif %}>
+                        Другое
+                    </option>
+                </select>
+            </div>
+
+
+            <div class="filter-field">
+                <label for="object_type">
+                    Тип объекта
+                </label>
+
+                <select
+                    id="object_type"
+                    name="object_type"
+                >
+
+                    <option value="">
+                        Все объекты
+                    </option>
+
+                    {% for object_type in object_types %}
+
+                        <option
+                            value="{{ object_type }}"
+                            {% if selected_object_type == object_type %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ object_type }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+            </div>
+
+
+            <div class="filter-actions">
+
+                <button
+                    type="submit"
+                    class="filter-button filter-apply"
+                >
+                    Применить
+                </button>
+
+                <a
+                    href="{% url 'audit_log' %}"
+                    class="filter-button filter-reset"
+                >
+                    Сбросить
+                </a>
+
+            </div>
+
+        </form>
+
+</section>
+
+    <!-- =========================
+         LOG TABLE
+    ========================= -->
+
+    <section class="table-card">
+
+        {% if logs %}
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>
+                                Дата и время
+                            </th>
+
+                            <th>
+                                Пользователь
+                            </th>
+
+                            <th>
+                                Действие
+                            </th>
+
+                            <th>
+                                Тип объекта
+                            </th>
+
+                            <th>
+                                Объект
+                            </th>
+
+                            <th>
+                                Описание
+                            </th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for log in logs %}
+
+                            <tr>
+
+                                <td class="date">
+                                    {{ log.created_at|date:"d.m.Y H:i" }}
+                                </td>
+
+                                <td>
+                                    {% if log.user %}
+                                        <span class="user-name">
+                                            {{ log.user.get_full_name|default:log.user.username }}
+                                        </span>
+                                    {% else %}
+                                        <span class="object-type">
+                                            Система
+                                        </span>
+                                    {% endif %}
+                                </td>
+
+                                <td>
+
+                                    <span
+                                        class="action-badge action-{{ log.action }}"
+                                    >
+                                        {{ log.get_action_display }}
+                                    </span>
+
+                                </td>
+
+                                <td>
+                                    <span class="object-type">
+                                        {{ log.object_type }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <span class="object-name">
+                                        {{ log.object_name }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <span class="description">
+                                        {{ log.description }}
+                                    </span>
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-state">
+
+                <div class="empty-title">
+                    История пока пуста
+                </div>
+
+                <div class="empty-text">
+                    После выполнения действий в системе они появятся здесь.
+                </div>
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+    <footer class="footer">
+        МТР-Контроль
+    </footer>
+
+</div>
+
+</body>
+</html>

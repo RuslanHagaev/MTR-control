@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Нормативные документы — МТР-Контроль</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background: #f4f6f8;
+            color: #1f2937;
+        }
+
+        .container {
+            max-width: 1450px;
+            margin: 0 auto;
+            padding: 24px 30px;
+        }
+
+        /* =====================================================
+           ШАПКА
+           ===================================================== */
+
+        .header {
+            background:
+                linear-gradient(
+                    135deg,
+                    #1e3a8a,
+                    #2563eb
+                );
+
+            color: white;
+
+            min-height: 82px;
+            padding: 0 25px;
+
+            border-radius: 15px;
+            margin-bottom: 20px;
+
+            box-shadow:
+                0 7px 22px
+                rgba(37, 99, 235, 0.18);
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            min-width: 250px;
+        }
+
+        .brand-icon {
+            width: 43px;
+            height: 43px;
+
+            border-radius: 11px;
+
+            background:
+                rgba(255,255,255,0.15);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.18);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .brand-title {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.4px;
+        }
+
+        .brand-subtitle {
+            font-size: 11px;
+            opacity: 0.72;
+            margin-top: 2px;
+        }
+
+        .profile-link {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+
+            color: white;
+            text-decoration: none;
+
+            padding: 6px 8px;
+            border-radius: 9px;
+
+            transition: 0.18s;
+
+            min-width: 190px;
+        }
+
+        .profile-link:hover {
+            background:
+                rgba(255,255,255,0.12);
+        }
+
+        .profile-avatar {
+            width: 37px;
+            height: 37px;
+            min-width: 37px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,255,255,0.18);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.2);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .profile-name {
+            font-size: 12px;
+            font-weight: 600;
+
+            white-space: nowrap;
+            max-width: 180px;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .profile-label {
+            font-size: 10px;
+            opacity: 0.65;
+
+            margin-top: 2px;
+
+            white-space: nowrap;
+            max-width: 180px;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* =====================================================
+           НАВИГАЦИЯ
+           ===================================================== */
+
+        .navigation-buttons {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .nav-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 7px;
+
+            padding: 10px 15px;
+
+            color: #475569;
+            background: #ffffff;
+
+            border: 1px solid #e2e8f0;
+            border-radius: 9px;
+
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            box-shadow:
+                0 2px 6px
+                rgba(15, 23, 42, 0.06);
+
+            transition:
+                background 0.15s ease,
+                color 0.15s ease,
+                border-color 0.15s ease,
+                transform 0.15s ease,
+                box-shadow 0.15s ease;
+        }
+
+        .nav-button:hover {
+            color: #1e293b;
+            background: #f8fafc;
+
+            border-color: #cbd5e1;
+
+            transform:
+                translateY(-1px);
+
+            box-shadow:
+                0 4px 10px
+                rgba(15, 23, 42, 0.09);
+        }
+
+        .home-icon {
+            flex-shrink: 0;
+        }
+
+        /* =====================================================
+           ЗАГОЛОВОК
+           ===================================================== */
+
+        .page-header {
+            background: white;
+
+            border-radius: 12px;
+
+            border:
+                1px solid #edf0f3;
+
+            box-shadow:
+                0 2px 9px
+                rgba(0,0,0,0.045);
+
+            padding: 22px 24px;
+
+            margin-bottom: 18px;
+        }
+
+        .page-header h1 {
+            margin: 0;
+
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            margin:
+                6px 0 0;
+
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        /* =====================================================
+           ПОИСК
+           ===================================================== */
+
+        .search-card {
+            background: white;
+
+            border-radius: 12px;
+
+            border:
+                1px solid #edf0f3;
+
+            box-shadow:
+                0 2px 9px
+                rgba(0,0,0,0.045);
+
+            padding: 16px;
+
+            margin-bottom: 18px;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-input {
+            flex: 1;
+
+            min-width: 0;
+
+            padding: 11px 13px;
+
+            border:
+                1px solid #dbe2ea;
+
+            border-radius: 8px;
+
+            font-size: 13px;
+
+            outline: none;
+
+            transition:
+                border-color 0.15s,
+                box-shadow 0.15s;
+        }
+
+        .search-input:focus {
+            border-color: #93c5fd;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(37, 99, 235, 0.08);
+        }
+
+        .search-button {
+            border: none;
+
+            padding:
+                0 20px;
+
+            border-radius: 8px;
+
+            background: #2563eb;
+            color: white;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition:
+                background 0.15s;
+        }
+
+        .search-button:hover {
+            background: #1d4ed8;
+        }
+
+        .clear-button {
+            display: inline-flex;
+            align-items: center;
+
+            padding:
+                0 15px;
+
+            border-radius: 8px;
+
+            background: #f8fafc;
+            color: #64748b;
+
+            border:
+                1px solid #e2e8f0;
+
+            text-decoration: none;
+
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .clear-button:hover {
+            background: #f1f5f9;
+            color: #334155;
+        }
+
+        /* =====================================================
+           ДОКУМЕНТЫ
+           ===================================================== */
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 12px;
+        }
+
+        .section-title h2 {
+            margin: 0;
+
+            font-size: 19px;
+            font-weight: 700;
+        }
+
+        .document-count {
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        .documents-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 16px;
+        }
+
+        .document-card {
+            background: white;
+
+            border-radius: 12px;
+
+            border:
+                1px solid #edf0f3;
+
+            box-shadow:
+                0 2px 9px
+                rgba(0,0,0,0.045);
+
+            padding: 19px;
+
+            transition:
+                transform 0.18s,
+                box-shadow 0.18s;
+        }
+
+        .document-card:hover {
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 7px 18px
+                rgba(0,0,0,0.08);
+        }
+
+        .document-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 10px;
+
+            margin-bottom: 13px;
+        }
+
+        .document-type {
+            display: inline-flex;
+            align-items: center;
+
+            padding:
+                5px 9px;
+
+            border-radius: 6px;
+
+            background: #eff6ff;
+            color: #2563eb;
+
+            font-size: 10px;
+            font-weight: 700;
+
+            text-transform: uppercase;
+        }
+
+        .document-year {
+            color: #94a3b8;
+            font-size: 11px;
+        }
+
+        .document-designation {
+            color: #1e3a8a;
+
+            font-size: 16px;
+            font-weight: 700;
+
+            margin-bottom: 7px;
+        }
+
+        .document-title {
+            color: #374151;
+
+            font-size: 13px;
+            line-height: 1.45;
+
+            min-height: 38px;
+
+            margin-bottom: 12px;
+        }
+
+        .document-description {
+            color: #94a3b8;
+
+            font-size: 11px;
+            line-height: 1.45;
+
+            min-height: 32px;
+
+            margin-bottom: 15px;
+        }
+
+        .open-document {
+            display: block;
+
+            width: 100%;
+
+            padding: 9px;
+
+            text-align: center;
+
+            background: #2563eb;
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 7px;
+
+            font-size: 12px;
+            font-weight: 600;
+
+            transition:
+                background 0.15s;
+        }
+
+        .open-document:hover {
+            background: #1d4ed8;
+        }
+
+        /* =====================================================
+           ПУСТО
+           ===================================================== */
+
+        .empty {
+            background: white;
+
+            padding: 45px 30px;
+
+            text-align: center;
+
+            border-radius: 11px;
+
+            border:
+                1px solid #edf0f3;
+
+            color: #6b7280;
+        }
+
+        .empty h3 {
+            margin:
+                0 0 7px;
+
+            color: #374151;
+        }
+
+        .empty p {
+            margin: 0;
+
+            font-size: 12px;
+        }
+
+        /* =====================================================
+           FOOTER
+           ===================================================== */
+
+        .footer {
+            margin-top: 28px;
+
+            padding:
+                18px 5px;
+
+            border-top:
+                1px solid #e5e7eb;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            color: #9ca3af;
+
+            font-size: 11px;
+        }
+
+        .footer strong {
+            color: #6b7280;
+            font-weight: 600;
+        }
+
+        /* =====================================================
+           АДАПТИВНОСТЬ
+           ===================================================== */
+
+        @media (max-width: 1100px) {
+
+            .documents-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 800px) {
+
+            .header {
+                padding: 15px;
+                flex-wrap: wrap;
+            }
+
+            .profile-info {
+                display: none;
+            }
+
+            .search-form {
+                flex-wrap: wrap;
+            }
+
+            .search-input {
+                flex-basis: 100%;
+            }
+
+            .search-button,
+            .clear-button {
+                min-height: 38px;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .container {
+                padding: 15px;
+            }
+
+            .brand-subtitle {
+                display: none;
+            }
+
+            .documents-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer {
+                flex-direction: column;
+                gap: 7px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- =====================================================
+         ШАПКА
+         ===================================================== -->
+
+    <header class="header">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                М
+            </div>
+
+            <div>
+
+                <div class="brand-title">
+                    МТР-Контроль
+                </div>
+
+                <div class="brand-subtitle">
+                    Система контроля материально-технических ресурсов
+                </div>
+
+            </div>
+
+        </div>
+
+
+        {% if user.is_authenticated %}
+
+            <a
+                href="{% url 'profile' %}"
+                class="profile-link"
+            >
+
+                <div class="profile-avatar">
+                    {{ user.username|first|upper }}
+                </div>
+
+                <div class="profile-info">
+
+                    <div class="profile-name">
+
+                        {% if user.get_full_name %}
+                            {{ user.get_full_name }}
+                        {% else %}
+                            {{ user.username }}
+                        {% endif %}
+
+                    </div>
+
+                    <div class="profile-label">
+
+                        {% if user.profile %}
+                            {{ user.profile.get_role_display }}
+                        {% else %}
+                            Профиль
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </a>
+
+        {% else %}
+
+            <a
+                href="{% url 'login' %}"
+                class="profile-link"
+            >
+
+                <div class="profile-avatar">
+                    →
+                </div>
+
+                <div class="profile-info">
+
+                    <div class="profile-name">
+                        Войти
+                    </div>
+
+                    <div class="profile-label">
+                        Авторизация
+                    </div>
+
+                </div>
+
+            </a>
+
+        {% endif %}
+
+    </header>
+
+
+    <!-- =====================================================
+         НАВИГАЦИЯ
+         ===================================================== -->
+
+    <div class="navigation-buttons">
+
+        <a
+            href="{% url 'home' %}"
+            class="nav-button"
+        >
+
+            <svg
+                class="home-icon"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+            >
+
+                <path
+                    d="M3 10.5L12 3L21 10.5"
+                    stroke="currentColor"
+                    stroke-width="2.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+
+                <path
+                    d="M5.5 9.5V21H18.5V9.5"
+                    stroke="currentColor"
+                    stroke-width="2.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+
+                <path
+                    d="M9.5 21V14H14.5V21"
+                    stroke="currentColor"
+                    stroke-width="2.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+
+            </svg>
+
+            <span>
+                Главная
+            </span>
+
+        </a>
+
+    </div>
+
+
+    <!-- =====================================================
+         ЗАГОЛОВОК
+         ===================================================== -->
+
+    <div class="page-header">
+
+        <h1>
+            Нормативные документы
+        </h1>
+
+        <p>
+            ГОСТ, ГОСТ Р, СП, СНиП, ПУЭ, СанПиН и другие нормативные документы.
+        </p>
+
+    </div>
+
+
+    <!-- =====================================================
+         ПОИСК
+         ===================================================== -->
+
+    <div class="search-card">
+
+        <form
+            method="get"
+            class="search-form"
+        >
+
+            <input
+                type="text"
+                name="q"
+                value="{{ query }}"
+                class="search-input"
+                placeholder="Поиск по обозначению, названию или описанию..."
+                autocomplete="off"
+            >
+
+            <button
+                type="submit"
+                class="search-button"
+            >
+                Найти
+            </button>
+
+            {% if query %}
+
+                <a
+                    href="{% url 'normative_documents' %}"
+                    class="clear-button"
+                >
+                    Сбросить
+                </a>
+
+            {% endif %}
+
+        </form>
+
+    </div>
+
+
+    <!-- =====================================================
+         СПИСОК
+         ===================================================== -->
+
+    <div class="section-title">
+
+        <h2>
+            Документы
+        </h2>
+
+        <div class="document-count">
+
+            Найдено:
+            {{ documents|length }}
+
+        </div>
+
+    </div>
+
+
+    {% if documents %}
+
+        <div class="documents-grid">
+
+            {% for document in documents %}
+
+                <div class="document-card">
+
+                    <div class="document-top">
+
+                        <div class="document-type">
+                            {{ document.get_document_type_display }}
+                        </div>
+
+                        {% if document.year %}
+
+                            <div class="document-year">
+                                {{ document.year }} г.
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="document-designation">
+                        {{ document.designation }}
+                    </div>
+
+
+                    <div class="document-title">
+                        {{ document.title }}
+                    </div>
+
+
+                    <div class="document-description">
+
+                        {% if document.description %}
+
+                            {{ document.description }}
+
+                        {% else %}
+
+                            Описание отсутствует.
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <a
+                        href="{% url 'normative_document_detail' document.id %}"
+                        class="open-document"
+                    >
+                        Открыть документ
+                    </a>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty">
+
+            <h3>
+                Нормативные документы не найдены
+            </h3>
+
+            {% if query %}
+
+                <p>
+                    По запросу «{{ query }}» ничего не найдено.
+                </p>
+
+            {% else %}
+
+                <p>
+                    Нормативных документов пока нет.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- =====================================================
+         FOOTER
+         ===================================================== -->
+
+    <footer class="footer">
+
+        <div>
+            МТР-Контроль
+        </div>
+
+        <div>
+
+            Создатель:
+
+            <strong>
+                Нагаев Руслан
+            </strong>
+
+        </div>
+
+    </footer>
+
+
+</div>
+
+</body>
+
+</html>

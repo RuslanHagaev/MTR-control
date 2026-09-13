@@ -1,0 +1,403 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Доступ ограничен — MTR-Control</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 20% 20%,
+                    rgba(37, 99, 235, 0.10),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 80% 80%,
+                    rgba(14, 165, 233, 0.08),
+                    transparent 30%
+                ),
+                #f5f7fb;
+
+            color: #172033;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 24px;
+        }
+
+        .page {
+            width: 100%;
+            max-width: 720px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.96);
+
+            border: 1px solid #e5e9f2;
+
+            border-radius: 24px;
+
+            padding: 48px 44px;
+
+            text-align: center;
+
+            box-shadow:
+                0 20px 60px rgba(20, 35, 60, 0.08),
+                0 4px 12px rgba(20, 35, 60, 0.04);
+
+            animation: appear 0.35s ease-out;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .icon-wrapper {
+            width: 88px;
+            height: 88px;
+
+            margin: 0 auto 26px;
+
+            border-radius: 24px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #eef4ff;
+
+            color: #2563eb;
+
+            box-shadow:
+                inset 0 0 0 1px rgba(37, 99, 235, 0.08);
+        }
+
+        .lock {
+            width: 38px;
+            height: 38px;
+
+            position: relative;
+        }
+
+        .lock-body {
+            position: absolute;
+
+            left: 5px;
+            bottom: 2px;
+
+            width: 28px;
+            height: 23px;
+
+            border-radius: 6px;
+
+            background: #2563eb;
+        }
+
+        .lock-body::after {
+            content: "";
+
+            position: absolute;
+
+            left: 11px;
+            top: 7px;
+
+            width: 6px;
+            height: 10px;
+
+            border-radius: 4px;
+
+            background: white;
+        }
+
+        .lock-shackle {
+            position: absolute;
+
+            left: 10px;
+            top: 0;
+
+            width: 18px;
+            height: 20px;
+
+            border: 5px solid #2563eb;
+            border-bottom: 0;
+
+            border-radius: 12px 12px 0 0;
+        }
+
+        .code {
+            display: inline-flex;
+            align-items: center;
+
+            padding: 6px 11px;
+
+            margin-bottom: 14px;
+
+            border-radius: 8px;
+
+            background: #f1f4f9;
+
+            color: #7b8497;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            letter-spacing: 0.08em;
+        }
+
+        h1 {
+            font-size: 30px;
+            line-height: 1.2;
+
+            margin-bottom: 14px;
+
+            color: #111827;
+        }
+
+        .description {
+            max-width: 520px;
+
+            margin: 0 auto;
+
+            color: #667085;
+
+            font-size: 16px;
+            line-height: 1.65;
+        }
+
+        .message {
+            margin: 28px auto 0;
+
+            padding: 17px 20px;
+
+            max-width: 560px;
+
+            border-radius: 14px;
+
+            background: #f8fafc;
+
+            border: 1px solid #e8edf4;
+
+            color: #344054;
+
+            font-size: 14px;
+            line-height: 1.55;
+
+            text-align: left;
+        }
+
+        .message-title {
+            display: block;
+
+            margin-bottom: 5px;
+
+            color: #111827;
+
+            font-weight: 700;
+        }
+
+        .actions {
+            display: flex;
+
+            justify-content: center;
+
+            gap: 12px;
+
+            margin-top: 32px;
+
+            flex-wrap: wrap;
+        }
+
+        .button {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            min-height: 46px;
+
+            padding: 0 20px;
+
+            border-radius: 12px;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            text-decoration: none;
+
+            transition:
+                transform 0.15s ease,
+                box-shadow 0.15s ease,
+                background 0.15s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-1px);
+        }
+
+        .button-primary {
+            color: white;
+
+            background: #2563eb;
+
+            box-shadow:
+                0 6px 16px rgba(37, 99, 235, 0.20);
+        }
+
+        .button-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .button-secondary {
+            color: #344054;
+
+            background: white;
+
+            border: 1px solid #dce2eb;
+        }
+
+        .button-secondary:hover {
+            background: #f8fafc;
+        }
+
+        .brand {
+            margin-top: 28px;
+
+            color: #98a2b3;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            letter-spacing: 0.02em;
+        }
+
+        .brand strong {
+            color: #667085;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 16px;
+            }
+
+            .card {
+                padding: 36px 22px;
+                border-radius: 20px;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+
+            .description {
+                font-size: 15px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="card">
+
+        <div class="icon-wrapper">
+
+            <div class="lock">
+                <div class="lock-shackle"></div>
+                <div class="lock-body"></div>
+            </div>
+
+        </div>
+
+        <div class="code">
+            ERROR 403
+        </div>
+
+        <h1>
+            Доступ ограничен
+        </h1>
+
+        <p class="description">
+            У вашей учётной записи недостаточно прав
+            для выполнения этого действия.
+        </p>
+
+        <div class="message">
+
+            <span class="message-title">
+                Почему это произошло?
+            </span>
+
+            {{ message|default:"У вас нет необходимых прав для доступа к этому разделу." }}
+
+        </div>
+
+        <div class="actions">
+
+            <a
+                href="javascript:history.back()"
+                class="button button-secondary"
+            >
+                ← Вернуться назад
+            </a>
+
+            <a
+                href="{% url 'home' %}"
+                class="button button-primary"
+            >
+                На главную
+            </a>
+
+        </div>
+
+        <div class="brand">
+            <strong>MTR-Control</strong>
+            · Система контроля материально-технических ресурсов
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

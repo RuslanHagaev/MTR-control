@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Удаление документа — MTR-Control
+    </title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+
+            padding: 30px;
+
+            font-family: Arial, sans-serif;
+
+            background-color: #f4f6f8;
+
+            color: #222;
+        }
+
+        .container {
+            max-width: 600px;
+
+            margin: 80px auto;
+        }
+
+        .card {
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.08);
+
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 0;
+
+            margin-bottom: 15px;
+        }
+
+        .warning {
+            color: #dc2626;
+
+            margin-bottom: 20px;
+        }
+
+        .document-name {
+            padding: 15px;
+
+            background-color: #f3f4f6;
+
+            border-radius: 8px;
+
+            margin-bottom: 25px;
+
+            font-weight: bold;
+
+            word-break: break-word;
+        }
+
+        .buttons {
+            display: flex;
+
+            justify-content: center;
+
+            gap: 10px;
+        }
+
+        button,
+        .back {
+            padding: 10px 18px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            font-size: 15px;
+
+            cursor: pointer;
+
+            text-decoration: none;
+        }
+
+        button {
+            background-color: #dc2626;
+
+            color: white;
+        }
+
+        button:hover {
+            background-color: #b91c1c;
+        }
+
+        .back {
+            background-color: #e5e7eb;
+
+            color: #222;
+        }
+
+        .back:hover {
+            background-color: #d1d5db;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>
+            Удалить документ?
+        </h1>
+
+        <p class="warning">
+            Документ будет удалён без возможности восстановления.
+        </p>
+
+
+        <div class="document-name">
+
+            📄 {{ document.name }}
+
+        </div>
+
+
+        <form method="post">
+
+            {% csrf_token %}
+
+
+            <div class="buttons">
+
+                <button type="submit">
+                    🗑 Да, удалить
+                </button>
+
+
+                <a
+                    href="{% url 'material_documents' material_id=material_id %}"
+                    class="back"
+                >
+                    Отмена
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

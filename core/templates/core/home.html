@@ -1,0 +1,1818 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>МТР-Контроль</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background: #f4f6f8;
+
+            color: #1f2937;
+        }
+
+
+        /* =====================================================
+           КОНТЕЙНЕР
+           ===================================================== */
+
+        .container {
+
+            max-width: 1450px;
+
+            margin: 0 auto;
+
+            padding: 24px 30px;
+        }
+
+
+        /* =====================================================
+           ШАПКА
+           ===================================================== */
+
+        .header {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1e3a8a,
+                    #2563eb
+                );
+
+            color: white;
+
+            min-height: 82px;
+
+            padding: 0 25px;
+
+            border-radius: 15px;
+
+            margin-bottom: 20px;
+
+            box-shadow:
+                0 7px 22px
+                rgba(37, 99, 235, 0.18);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+        }
+
+
+        /* =====================================================
+           ЛОГО
+           ===================================================== */
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            min-width: 250px;
+        }
+
+
+        .brand-icon {
+
+            width: 43px;
+
+            height: 43px;
+
+            border-radius: 11px;
+
+            background:
+                rgba(255,255,255,0.15);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.18);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 20px;
+
+            font-weight: 700;
+        }
+
+
+        .brand-title {
+
+            font-size: 24px;
+
+            font-weight: 700;
+
+            letter-spacing: -0.4px;
+        }
+
+
+        .brand-subtitle {
+
+            font-size: 11px;
+
+            opacity: 0.72;
+
+            margin-top: 2px;
+        }
+
+
+        /* =====================================================
+           НАВИГАЦИЯ
+           ===================================================== */
+
+        .header-nav {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: flex-end;
+
+            gap: 4px;
+
+            flex: 1;
+        }
+
+
+        .nav-link {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding: 9px 11px;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 8px;
+
+            font-size: 12px;
+
+            font-weight: 500;
+
+            opacity: 0.88;
+
+            transition: 0.18s;
+        }
+
+
+        .nav-link:hover {
+
+            background:
+                rgba(255,255,255,0.12);
+
+            opacity: 1;
+        }
+
+
+        .nav-icon {
+
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           ПРОФИЛЬ
+           ===================================================== */
+
+        .profile-link {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 6px 8px;
+
+            border-radius: 9px;
+
+            transition: 0.18s;
+
+            min-width: 190px;
+        }
+
+
+        .profile-link:hover {
+
+            background:
+                rgba(255,255,255,0.12);
+        }
+
+
+        .profile-avatar {
+
+            width: 37px;
+
+            height: 37px;
+
+            min-width: 37px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,255,255,0.18);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.2);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+        .profile-name {
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            white-space: nowrap;
+
+            max-width: 180px;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+        }
+
+
+        .profile-label {
+
+            font-size: 10px;
+
+            opacity: 0.65;
+
+            margin-top: 2px;
+
+            white-space: nowrap;
+
+            max-width: 180px;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+        }
+
+
+        /* =====================================================
+           ОСНОВНОЙ DASHBOARD
+           ===================================================== */
+
+        .dashboard {
+
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1fr)
+                minmax(430px, 0.95fr);
+
+            gap: 18px;
+
+            align-items: stretch;
+
+            margin-bottom: 25px;
+        }
+
+
+        /* =====================================================
+           ЛЕВЫЕ КАРТОЧКИ
+           ===================================================== */
+
+        .left-dashboard {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            grid-template-rows:
+                repeat(3, 1fr);
+
+            gap: 12px;
+
+            min-height: 0;
+        }
+
+
+        .status-card {
+
+            position: relative;
+
+            background: white;
+
+            min-height: 105px;
+
+            padding: 16px;
+
+            border-radius: 12px;
+
+            text-decoration: none;
+
+            color: inherit;
+
+            overflow: hidden;
+
+            border:
+                1px solid #edf0f3;
+
+            box-shadow:
+                0 2px 9px
+                rgba(0,0,0,0.045);
+
+            transition:
+                transform 0.18s,
+                box-shadow 0.18s;
+        }
+
+
+        .status-card:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 7px 18px
+                rgba(0,0,0,0.08);
+        }
+
+
+        .status-card::after {
+
+            content: "";
+
+            position: absolute;
+
+            right: -25px;
+
+            bottom: -25px;
+
+            width: 75px;
+
+            height: 75px;
+
+            border-radius: 50%;
+
+            opacity: 0.07;
+
+            background: currentColor;
+        }
+
+
+        .status-top {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 8px;
+        }
+
+
+        .status-icon {
+
+            width: 32px;
+
+            height: 32px;
+
+            border-radius: 9px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 15px;
+
+            font-weight: 700;
+        }
+
+
+        .status-arrow {
+
+            color: #cbd5e1;
+
+            font-size: 16px;
+
+            transition: 0.18s;
+        }
+
+
+        .status-card:hover .status-arrow {
+
+            transform:
+                translateX(3px);
+
+            color: #94a3b8;
+        }
+
+
+        .status-name {
+
+            font-size: 12px;
+
+            color: #64748b;
+
+            margin-bottom: 4px;
+        }
+
+
+        .status-number {
+
+            font-size: 24px;
+
+            font-weight: 700;
+
+            line-height: 1;
+        }
+
+
+        .status-description {
+
+            margin-top: 5px;
+
+            font-size: 10px;
+
+            color: #94a3b8;
+        }
+
+
+        /* =====================================================
+           ЦВЕТА
+           ===================================================== */
+
+        .received {
+            color: #64748b;
+        }
+
+        .received .status-icon {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+
+        .checking {
+            color: #b7791f;
+        }
+
+        .checking .status-icon {
+            background: #fffbeb;
+            color: #b7791f;
+        }
+
+
+        .warning {
+            color: #b45309;
+        }
+
+        .warning .status-icon {
+            background: #fff7ed;
+            color: #c2410c;
+        }
+
+
+        .accepted {
+            color: #15803d;
+        }
+
+        .accepted .status-icon {
+            background: #f0fdf4;
+            color: #15803d;
+        }
+
+
+        .rejected {
+            color: #b91c1c;
+        }
+
+        .rejected .status-icon {
+            background: #fef2f2;
+            color: #b91c1c;
+        }
+
+
+        .positions {
+            color: #2563eb;
+        }
+
+        .positions .status-icon {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+
+        /* =====================================================
+           ПРАВАЯ ЧАСТЬ
+           ===================================================== */
+
+        .right-dashboard {
+
+            display: grid;
+
+            grid-template-rows:
+                2fr
+                1fr;
+
+            gap: 12px;
+
+            min-height: 0;
+        }
+
+
+        /* =====================================================
+           ДИАГРАММА
+           ===================================================== */
+
+        .chart-card {
+
+            background: white;
+
+            border-radius: 12px;
+
+            padding: 18px 20px;
+
+            border:
+                1px solid #edf0f3;
+
+            box-shadow:
+                0 2px 9px
+                rgba(0,0,0,0.045);
+
+            min-height: 0;
+        }
+
+
+        .chart-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 2px;
+        }
+
+
+        .chart-title {
+
+            margin: 0;
+
+            font-size: 16px;
+
+            font-weight: 650;
+        }
+
+
+        .chart-subtitle {
+
+            margin-top: 3px;
+
+            font-size: 10px;
+
+            color: #94a3b8;
+        }
+
+
+        .chart-container {
+
+            position: relative;
+
+            height: 185px;
+
+            margin-top: 3px;
+        }
+
+
+        /* =====================================================
+           ОБЩАЯ СТАТИСТИКА
+           ===================================================== */
+
+        .summary-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 12px;
+        }
+
+
+        .summary-card {
+
+            background: white;
+
+            border-radius: 12px;
+
+            border:
+                1px solid #edf0f3;
+
+            box-shadow:
+                0 2px 9px
+                rgba(0,0,0,0.045);
+
+            padding: 16px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+        }
+
+
+        .summary-icon {
+
+            width: 40px;
+
+            height: 40px;
+
+            border-radius: 10px;
+
+            background: #eff6ff;
+
+            color: #2563eb;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 18px;
+
+            font-weight: 700;
+        }
+
+
+        .summary-label {
+
+            color: #64748b;
+
+            font-size: 11px;
+
+            margin-bottom: 3px;
+        }
+
+
+        .summary-number {
+
+            font-size: 25px;
+
+            font-weight: 700;
+
+            line-height: 1;
+        }
+
+
+        /* =====================================================
+           ОБЪЕКТЫ
+           ===================================================== */
+
+        .section-title {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 12px;
+        }
+
+
+        .section-title h2 {
+
+            margin: 0;
+
+            font-size: 21px;
+        }
+
+
+        .objects-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 16px;
+        }
+
+
+        .object-card {
+
+            background: white;
+
+            padding: 19px;
+
+            border-radius: 11px;
+
+            border:
+                1px solid #edf0f3;
+
+            box-shadow:
+                0 2px 9px
+                rgba(0,0,0,0.045);
+
+            transition: 0.18s;
+        }
+
+
+        .object-card:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 7px 18px
+                rgba(0,0,0,0.08);
+        }
+
+
+        .object-card h3 {
+
+            margin:
+                0 0 7px;
+
+            font-size: 17px;
+        }
+
+
+        .object-description {
+
+            color: #6b7280;
+
+            font-size: 12px;
+
+            min-height: 34px;
+
+            margin-bottom: 14px;
+        }
+
+
+        .object-info {
+
+            padding-top: 11px;
+
+            border-top:
+                1px solid #eee;
+
+            margin-bottom: 13px;
+        }
+
+
+        .material-count {
+
+            color: #6b7280;
+
+            font-size: 11px;
+        }
+
+
+        .open-button {
+
+            display: block;
+
+            width: 100%;
+
+            padding: 9px;
+
+            text-align: center;
+
+            background: #2563eb;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 7px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            transition: 0.15s;
+        }
+
+
+        .open-button:hover {
+
+            background: #1d4ed8;
+        }
+
+
+        /* =====================================================
+           ПУСТО
+           ===================================================== */
+
+        .empty {
+
+            background: white;
+
+            padding: 40px;
+
+            text-align: center;
+
+            border-radius: 11px;
+
+            color: #6b7280;
+        }
+
+
+        /* =====================================================
+           FOOTER
+           ===================================================== */
+
+        .footer {
+
+            margin-top: 28px;
+
+            padding:
+                18px 5px;
+
+            border-top:
+                1px solid #e5e7eb;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            color: #9ca3af;
+
+            font-size: 11px;
+        }
+
+
+        .footer strong {
+
+            color: #6b7280;
+
+            font-weight: 600;
+        }
+
+
+        /* =====================================================
+           АДАПТИВНОСТЬ
+           ===================================================== */
+
+        @media (max-width: 1100px) {
+
+            .dashboard {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .right-dashboard {
+
+                min-height: 420px;
+            }
+
+
+            .objects-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 800px) {
+
+            .header {
+
+                padding: 15px;
+
+                flex-wrap: wrap;
+            }
+
+
+            .header-nav {
+
+                order: 3;
+
+                width: 100%;
+
+                overflow-x: auto;
+
+                justify-content: flex-start;
+            }
+
+
+            .profile-info {
+
+                display: none;
+            }
+
+
+            .objects-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .container {
+
+                padding: 15px;
+            }
+
+
+            .brand-subtitle {
+
+                display: none;
+            }
+
+
+            .left-dashboard {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .right-dashboard {
+
+                grid-template-rows:
+                    1fr auto;
+            }
+
+
+            .summary-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- =====================================================
+         ШАПКА
+         ===================================================== -->
+
+    <header class="header">
+
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                М
+            </div>
+
+            <div>
+
+                <div class="brand-title">
+                    МТР-Контроль
+                </div>
+
+                <div class="brand-subtitle">
+                    Система контроля материально-технических ресурсов
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <nav class="header-nav">
+
+
+            <a
+                href="{% url 'search' %}"
+                class="nav-link"
+            >
+
+                <span class="nav-icon">
+                    ⌕
+                </span>
+
+                Поиск
+
+            </a>
+
+
+            <a 
+                href="{% url 'normative_documents' %}" 
+                class="nav-link"
+            >
+                <span class="nav-icon">
+                    §
+                </span>
+
+                Нормативные документы
+                
+            </a>
+
+            {% if user.is_authenticated %}
+                {% if user.profile.role == "admin" or user.profile.role == "management" %}
+                    <a
+                        href="{% url 'audit_log' %}"
+                        class="nav-link"
+                    >
+                        <span class="nav-icon">
+                            ↻
+                        </span>
+                        История изменений
+                    </a>
+                {% endif %}
+            {% endif %}
+        </nav>
+
+
+        <!-- =================================================
+             ПРОФИЛЬ ТЕКУЩЕГО ПОЛЬЗОВАТЕЛЯ
+             ================================================= -->
+    {% if user.is_authenticated %}    
+        <a
+            href="{% url 'profile' %}"
+            class="profile-link"
+        >
+
+                <div class="profile-avatar">
+
+                    {{ user.username|first|upper }}
+
+                </div>
+
+
+                <div class="profile-info">
+
+                    <div class="profile-name">
+
+                        {% if user.get_full_name %}
+
+                            {{ user.get_full_name }}
+
+                        {% else %}
+
+                            {{ user.username }}
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="profile-label">
+
+                        {% if user.profile %}
+
+                            {{ user.profile.get_role_display }}
+
+                        {% else %}
+
+                            Профиль
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+    {% else %}
+        <a
+            href="{% url 'login' %}"
+            class="profile-link"            
+        >
+                <div class="profile-avatar">
+                    →
+                </div>
+
+
+                <div class="profile-info">
+
+                    <div class="profile-name">
+                        Войти
+                    </div>
+
+                    <div class="profile-label">
+                       Авторизация
+                    </div>
+
+                </div>
+
+
+            {% endif %}
+
+        </a>
+
+
+    </header>
+
+
+    <!-- =====================================================
+         DASHBOARD
+         ===================================================== -->
+
+    <div class="dashboard">
+
+
+        <!-- =================================================
+             ЛЕВАЯ ЧАСТЬ
+             ================================================= -->
+
+        <div class="left-dashboard">
+
+
+            <!-- ПОЛУЧЕН -->
+
+            <a
+                href="{% url 'material_status_list' status='received' %}"
+                class="status-card received"
+            >
+
+                <div class="status-top">
+
+                    <div class="status-icon">
+                        ↓
+                    </div>
+
+                    <div class="status-arrow">
+                        →
+                    </div>
+
+                </div>
+
+                <div class="status-name">
+                    Получен
+                </div>
+
+                <div class="status-number">
+                    {{ received_materials }}
+                </div>
+
+                <div class="status-description">
+                    Материалы поступили
+                </div>
+
+            </a>
+
+
+            <!-- НА ПРОВЕРКЕ -->
+
+            <a
+                href="{% url 'material_status_list' status='checking' %}"
+                class="status-card checking"
+            >
+
+                <div class="status-top">
+
+                    <div class="status-icon">
+                        ↻
+                    </div>
+
+                    <div class="status-arrow">
+                        →
+                    </div>
+
+                </div>
+
+                <div class="status-name">
+                    На проверке
+                </div>
+
+                <div class="status-number">
+                    {{ checking_materials }}
+                </div>
+
+                <div class="status-description">
+                    Требуют проверки
+                </div>
+
+            </a>
+
+
+            <!-- ЗАМЕЧАНИЯ -->
+
+            <a
+                href="{% url 'material_status_list' status='warning' %}"
+                class="status-card warning"
+            >
+
+                <div class="status-top">
+
+                    <div class="status-icon">
+                        !
+                    </div>
+
+                    <div class="status-arrow">
+                        →
+                    </div>
+
+                </div>
+
+                <div class="status-name">
+                    Есть замечания
+                </div>
+
+                <div class="status-number">
+                    {{ warning_materials }}
+                </div>
+
+                <div class="status-description">
+                    Требуют внимания
+                </div>
+
+            </a>
+
+
+            <!-- ПРИНЯТ -->
+
+            <a
+                href="{% url 'material_status_list' status='accepted' %}"
+                class="status-card accepted"
+            >
+
+                <div class="status-top">
+
+                    <div class="status-icon">
+                        ✓
+                    </div>
+
+                    <div class="status-arrow">
+                        →
+                    </div>
+
+                </div>
+
+                <div class="status-name">
+                    Принят
+                </div>
+
+                <div class="status-number">
+                    {{ accepted_materials }}
+                </div>
+
+                <div class="status-description">
+                    Проверка завершена
+                </div>
+
+            </a>
+
+
+            <!-- ОТКЛОНЁН -->
+
+            <a
+                href="{% url 'material_status_list' status='rejected' %}"
+                class="status-card rejected"
+            >
+
+                <div class="status-top">
+
+                    <div class="status-icon">
+                        ×
+                    </div>
+
+                    <div class="status-arrow">
+                        →
+                    </div>
+
+                </div>
+
+                <div class="status-name">
+                    Отклонён
+                </div>
+
+                <div class="status-number">
+                    {{ rejected_materials }}
+                </div>
+
+                <div class="status-description">
+                    Не соответствует требованиям
+                </div>
+
+            </a>
+
+
+            <!-- ВСЕГО ПОЗИЦИЙ -->
+
+            <div class="status-card positions">
+
+                <div class="status-top">
+
+                    <div class="status-icon">
+                        №
+                    </div>
+
+                </div>
+
+                <div class="status-name">
+                    Всего позиций
+                </div>
+
+                <div class="status-number">
+                    {{ total_materials }}
+                </div>
+
+                <div class="status-description">
+                    Материальные позиции
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             ПРАВАЯ ЧАСТЬ
+             ================================================= -->
+
+        <div class="right-dashboard">
+
+
+            <!-- ДИАГРАММА -->
+
+            <div class="chart-card">
+
+                <div class="chart-header">
+
+                    <div>
+
+                        <h2 class="chart-title">
+                            Состояние МТР
+                        </h2>
+
+                        <div class="chart-subtitle">
+                            Распределение материалов по статусам
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="chart-container">
+
+                    <canvas id="materialsChart"></canvas>
+
+                </div>
+
+            </div>
+
+
+            <!-- ОБЪЕКТЫ + МТР -->
+
+            <div class="summary-grid">
+
+
+                <div class="summary-card">
+
+                    <div class="summary-icon">
+                        ◇
+                    </div>
+
+                    <div>
+
+                        <div class="summary-label">
+                            Всего объектов
+                        </div>
+
+                        <div class="summary-number">
+                            {{ total_objects }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <div class="summary-icon">
+                        №
+                    </div>
+
+                    <div>
+
+                        <div class="summary-label">
+                            Всего МТР
+                        </div>
+
+                        <div class="summary-number">
+                            {{ total_materials }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         ОБЪЕКТЫ
+         ===================================================== -->
+
+    <div class="section-title">
+
+        <h2>
+            Объекты
+        </h2>
+
+    </div>
+
+
+    {% if objects %}
+
+
+        <div class="objects-grid">
+
+
+            {% for object in objects %}
+
+
+                <div class="object-card">
+
+
+                    <h3>
+                        {{ object.name }}
+                    </h3>
+
+
+                    <div class="object-description">
+
+                        {% if object.description %}
+
+                            {{ object.description }}
+
+                        {% else %}
+
+                            Описание объекта отсутствует.
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="object-info">
+
+                        <span class="material-count">
+
+                            Материалов:
+                            {{ object.materials.count }}
+
+                        </span>
+
+                    </div>
+
+
+                    <a
+                        href="{% url 'object_detail' object.id %}"
+                        class="open-button"
+                    >
+                        Открыть объект
+                    </a>
+
+
+                </div>
+
+
+            {% endfor %}
+
+
+        </div>
+
+
+    {% else %}
+
+
+        <div class="empty">
+
+            <h3>
+                Объектов пока нет
+            </h3>
+
+            <p>
+                Добавьте первый объект через административную панель.
+            </p>
+
+        </div>
+
+
+    {% endif %}
+
+
+    <!-- =====================================================
+         FOOTER
+         ===================================================== -->
+
+    <footer class="footer">
+
+        <div>
+            МТР-Контроль
+        </div>
+
+        <div>
+            Создатель:
+            <strong>
+                Нагаев Руслан
+            </strong>
+        </div>
+
+    </footer>
+
+
+</div>
+
+
+<!-- =========================================================
+     CHART.JS
+     ========================================================= -->
+
+<script>
+
+    const chartCanvas =
+        document.getElementById(
+            "materialsChart"
+        );
+
+
+    new Chart(
+        chartCanvas,
+        {
+
+            type: "doughnut",
+
+
+            data: {
+
+                labels: [
+
+                    "Получен",
+                    "На проверке",
+                    "Есть замечания",
+                    "Принят",
+                    "Отклонён"
+
+                ],
+
+
+                datasets: [
+
+                    {
+
+                        data: [
+
+                            {{ received_materials }},
+                            {{ checking_materials }},
+                            {{ warning_materials }},
+                            {{ accepted_materials }},
+                            {{ rejected_materials }}
+
+                        ],
+
+
+                        backgroundColor: [
+
+                            "#94a3b8",
+                            "#d6ad62",
+                            "#d99a58",
+                            "#72a98a",
+                            "#c97979"
+
+                        ],
+
+
+                        borderColor: "#ffffff",
+
+                        borderWidth: 3,
+
+                        hoverOffset: 6
+
+                    }
+
+                ]
+
+            },
+
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                cutout: "70%",
+
+
+                plugins: {
+
+                    legend: {
+
+                        position: "bottom",
+
+                        labels: {
+
+                            usePointStyle: true,
+
+                            pointStyle: "circle",
+
+                            padding: 10,
+
+                            color: "#64748b",
+
+                            font: {
+
+                                size: 10
+
+                            }
+
+                        }
+
+                    },
+
+
+                    tooltip: {
+
+                        backgroundColor:
+                            "rgba(31, 41, 55, 0.94)",
+
+                        titleColor: "#ffffff",
+
+                        bodyColor: "#e5e7eb",
+
+                        padding: 11,
+
+                        cornerRadius: 8,
+
+
+                        callbacks: {
+
+                            label: function(context) {
+
+                                const value =
+                                    context.raw;
+
+                                const total =
+                                    {{ total_materials }};
+
+                                let percent = 0;
+
+                                if (total > 0) {
+
+                                    percent =
+                                        (
+                                            value /
+                                            total
+                                        ) * 100;
+
+                                }
+
+                                return (
+                                    " " +
+                                    value +
+                                    " МТР • " +
+                                    percent.toFixed(1) +
+                                    "%"
+                                );
+                            },
+
+
+                            afterBody: function() {
+
+                                return [
+                                    "",
+                                    "Нажмите, чтобы открыть список"
+                                ];
+
+                            }
+
+                        }
+
+                    }
+
+                },
+
+
+                onClick: function(
+                    event,
+                    elements
+                ) {
+
+                    if (!elements.length) {
+
+                        return;
+
+                    }
+
+
+                    const index =
+                        elements[0].index;
+
+
+                    const statuses = [
+
+                        "received",
+                        "checking",
+                        "warning",
+                        "accepted",
+                        "rejected"
+
+                    ];
+
+
+                    const status =
+                        statuses[index];
+
+
+                    window.location.href =
+                        "{% url 'material_status_list' status='received' %}"
+                        .replace(
+                            "received",
+                            status
+                        );
+
+                }
+
+            }
+
+        }
+
+    );
+
+</script>
+
+
+</body>
+
+</html>

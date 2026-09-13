@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Удаление АоРПИ — MTR-Control</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px;
+
+            font-family: Arial, sans-serif;
+
+            background-color: #f4f6f8;
+
+            color: #222;
+        }
+
+        .container {
+            max-width: 600px;
+
+            margin: 80px auto;
+        }
+
+        .card {
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.08);
+
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 0;
+            margin-bottom: 15px;
+
+            color: #dc2626;
+        }
+
+        .warning {
+            color: #dc2626;
+
+            margin-bottom: 25px;
+
+            line-height: 1.5;
+        }
+
+        .act-info {
+            padding: 18px;
+
+            background-color: #f3f4f6;
+
+            border-radius: 8px;
+
+            margin-bottom: 25px;
+
+            text-align: left;
+        }
+
+        .act-info p {
+            margin: 8px 0;
+        }
+
+        .label {
+            color: #6b7280;
+        }
+
+        .value {
+            font-weight: bold;
+        }
+
+        .buttons {
+            display: flex;
+
+            justify-content: center;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+        }
+
+        button,
+        .back {
+            padding: 11px 20px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            font-size: 15px;
+
+            cursor: pointer;
+
+            text-decoration: none;
+
+            display: inline-block;
+        }
+
+        button {
+            background-color: #dc2626;
+
+            color: white;
+        }
+
+        button:hover {
+            background-color: #b91c1c;
+        }
+
+        .back {
+            background-color: #e5e7eb;
+
+            color: #222;
+        }
+
+        .back:hover {
+            background-color: #d1d5db;
+        }
+
+        .danger-note {
+            margin-top: 20px;
+
+            font-size: 13px;
+
+            color: #6b7280;
+        }
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .container {
+                margin: 30px auto;
+            }
+
+            .card {
+                padding: 22px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            button,
+            .back {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>
+            🗑 Удалить АоРПИ?
+        </h1>
+
+        <p class="warning">
+            Вы действительно хотите удалить этот АоРПИ?
+        </p>
+
+        <div class="act-info">
+
+            <p>
+                <span class="label">Номер:</span>
+                <span class="value">
+                    {{ act.number|default:"Без номера" }}
+                </span>
+            </p>
+
+            <p>
+                <span class="label">Материал:</span>
+                <span class="value">
+                    {{ material.name }}
+                </span>
+            </p>
+
+        </div>
+
+        <p class="danger-note">
+            ⚠ Это действие нельзя отменить.
+        </p>
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            <div class="buttons">
+
+                <button type="submit">
+                    🗑 Да, удалить АоРПИ
+                </button>
+
+                <a
+                    href="{% url 'material_act_detail' act_id=act.id %}"
+                    class="back"
+                >
+                    ↩ Отмена
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

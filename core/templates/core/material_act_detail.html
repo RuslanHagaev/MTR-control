@@ -1,0 +1,1472 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        АоРПИ № {{ act.number|default:"Без номера" }}
+    </title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+            padding: 30px;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background: #f4f6f8;
+            color: #1f2937;
+        }
+
+
+        .container {
+            max-width: 1250px;
+            margin: 0 auto;
+        }
+
+
+        /* =========================
+           ВОЗВРАТ
+           ========================= */
+
+        .back {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            margin-bottom: 20px;
+
+            color: #2563eb;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 600;
+        }
+
+
+        .back:hover {
+            color: #1d4ed8;
+        }
+
+
+        /* =========================
+           КАРТОЧКА
+           ========================= */
+
+        .card {
+            background: white;
+
+            padding: 28px;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.05);
+
+            margin-bottom: 20px;
+        }
+
+
+        /* =========================
+           ЗАГОЛОВОК
+           ========================= */
+
+        .header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-start;
+
+            gap: 20px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .header h1 {
+            margin: 0 0 8px 0;
+
+            font-size: 28px;
+
+            color: #111827;
+        }
+
+
+        .subtitle {
+            color: #6b7280;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           СТАТУС
+           ========================= */
+
+        .status {
+            display: inline-flex;
+
+            align-items: center;
+
+            padding: 8px 14px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+        }
+
+
+        .status-draft {
+            background: #fef3c7;
+
+            color: #92400e;
+        }
+
+
+        .status-signed {
+            background: #dcfce7;
+
+            color: #166534;
+        }
+
+
+        /* =========================
+           КНОПКИ
+           ========================= */
+
+        .actions {
+            display: flex;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .button {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 7px;
+
+            padding: 10px 16px;
+
+            border-radius: 8px;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            border: none;
+
+            cursor: pointer;
+
+            transition:
+                background 0.15s,
+                transform 0.15s;
+        }
+
+
+        .button:hover {
+            transform: translateY(-1px);
+        }
+
+
+        .button-primary {
+            background: #2563eb;
+
+            color: white;
+        }
+
+
+        .button-primary:hover {
+            background: #1d4ed8;
+        }
+
+
+        .button-secondary {
+            background: #f1f5f9;
+
+            color: #475569;
+        }
+
+
+        .button-secondary:hover {
+            background: #e2e8f0;
+        }
+
+
+        .button-success {
+            background: #16a34a;
+
+            color: white;
+        }
+
+
+        .button-success:hover {
+            background: #15803d;
+        }
+
+
+        /* =========================
+           СЕКЦИЯ
+           ========================= */
+
+        .section {
+            margin-top: 28px;
+        }
+
+
+        .section:first-child {
+            margin-top: 0;
+        }
+
+
+        .section-title {
+            margin: 0 0 15px 0;
+
+            padding-bottom: 10px;
+
+            border-bottom: 1px solid #e5e7eb;
+
+            font-size: 18px;
+
+            color: #111827;
+        }
+
+
+        /* =========================
+           ПОЛЯ
+           ========================= */
+
+        .grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 14px 20px;
+        }
+
+
+        .field {
+            padding: 13px 15px;
+
+            background: #f8fafc;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 9px;
+
+            min-width: 0;
+        }
+
+
+        .field-full {
+            grid-column: 1 / -1;
+        }
+
+
+        .label {
+            margin-bottom: 5px;
+
+            color: #64748b;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.03em;
+        }
+
+
+        .value {
+            color: #111827;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+
+            white-space: pre-line;
+
+            overflow-wrap: anywhere;
+        }
+
+
+        .empty-value {
+            color: #9ca3af;
+
+            font-style: italic;
+        }
+
+
+        /* =========================
+           ПРОВЕРКА
+           ========================= */
+
+        .result-box {
+            padding: 16px;
+
+            border-radius: 10px;
+
+            background: #f8fafc;
+
+            border: 1px solid #e5e7eb;
+
+            line-height: 1.6;
+        }
+
+
+        .result-title {
+            margin-bottom: 7px;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            color: #64748b;
+
+            text-transform: uppercase;
+        }
+
+
+        /* =========================
+           ДОКУМЕНТАЦИЯ
+           ========================= */
+
+        .complete {
+            display: inline-flex;
+
+            align-items: center;
+
+            padding: 6px 10px;
+
+            border-radius: 7px;
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+
+        .complete-yes {
+            background: #dcfce7;
+
+            color: #166534;
+        }
+
+
+        .complete-no {
+            background: #fee2e2;
+
+            color: #991b1b;
+        }
+
+
+        /* =========================
+           ПОДПИСАННЫЙ ФАЙЛ
+           ========================= */
+
+        .file-box {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            padding: 16px;
+
+            background: #eff6ff;
+
+            border: 1px solid #bfdbfe;
+
+            border-radius: 10px;
+        }
+
+
+        .file-info {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            min-width: 0;
+        }
+
+
+        .file-icon {
+            font-size: 25px;
+        }
+
+
+        .file-name {
+            font-size: 14px;
+
+            font-weight: 600;
+
+            color: #1e3a8a;
+
+            overflow-wrap: anywhere;
+        }
+
+
+        .file-link {
+            color: #2563eb;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            white-space: nowrap;
+        }
+
+
+        .file-link:hover {
+            text-decoration: underline;
+        }
+
+
+        .no-file {
+            padding: 16px;
+
+            background: #fff7ed;
+
+            border: 1px solid #fed7aa;
+
+            color: #c2410c;
+
+            border-radius: 10px;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           ПОДПИСАНТЫ
+           ========================= */
+
+        .signature {
+            padding: 18px;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 10px;
+
+            background: #fafafa;
+        }
+
+
+        .signature-title {
+            margin-bottom: 14px;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            color: #111827;
+        }
+
+
+        .signature-row {
+            margin-bottom: 9px;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+        }
+
+
+        .signature-label {
+            color: #64748b;
+        }
+
+
+        /* =========================
+           НИЖНИЕ КНОПКИ
+           ========================= */
+
+        .bottom-actions {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            margin-top: 25px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid #e5e7eb;
+        }
+
+
+        /* =========================
+           АДАПТИВНОСТЬ
+           ========================= */
+
+        @media (max-width: 800px) {
+
+            body {
+                padding: 15px;
+            }
+
+
+            .card {
+                padding: 20px;
+            }
+
+
+            .header {
+                flex-direction: column;
+            }
+
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .field-full {
+                grid-column: auto;
+            }
+
+
+            .file-box {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+
+            .bottom-actions {
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+
+            .actions {
+                width: 100%;
+            }
+
+
+            .button {
+                flex: 1;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- =========================
+         ВОЗВРАТ
+         ========================= -->
+
+    <a
+        href="{% url 'project_code_detail' project_code_id=act.material.project_code.id %}"
+        class="back"
+    >
+        ← Вернуться к материалу
+    </a>
+
+
+    <!-- =========================
+         ОСНОВНАЯ КАРТОЧКА
+         ========================= -->
+
+    <div class="card">
+
+
+        <div class="header">
+
+
+            <div>
+
+                <h1>
+                    АоРПИ №
+                    {{ act.number|default:"Без номера" }}
+                </h1>
+
+
+                <div class="subtitle">
+
+                    Акт о результатах проверки изделий
+
+                    {% if act.date %}
+                        · {{ act.date|date:"d.m.Y" }}
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            {% if act.status == "signed" %}
+
+                <span class="status status-signed">
+                    ✓ Подписан
+                </span>
+
+            {% else %}
+
+                <span class="status status-draft">
+                    ● Разработка
+                </span>
+
+            {% endif %}
+
+
+        </div>
+
+
+        <!-- =========================
+             КНОПКИ
+             ========================= -->
+
+        <div class="actions">
+
+
+            <!-- СКАЧАТЬ WORD -->
+
+            <a
+                href="{% url 'material_act_generate' act_id=act.id %}"
+                class="button button-success"
+            >
+                📄 Скачать Word
+            </a>
+
+
+            <!-- РЕДАКТИРОВАТЬ -->
+            {% if user_is_admin or user_is_vkh %}
+                <a
+                    href="{% url 'material_act_edit' act_id=act.id %}"
+                    class="button button-primary"
+                >
+                    ✏ Редактировать
+                </a>
+            {% endif %}
+
+            {% if user_is_admin or user_is_vkh %}
+                <a
+                    href="{% url 'material_act_delete' act_id=act.id %}"
+                    class="button button-danger"
+                >
+                    🗑 Удалить АоРПИ
+                </a>
+            {% endif %}
+            <!-- ПОДПИСАННЫЙ ФАЙЛ -->
+
+            {% if act.signed_file %}
+
+                <a
+                    href="{{ act.signed_file.url }}"
+                    target="_blank"
+                    class="button button-secondary"
+                >
+                    📎 Открыть подписанный АоРПИ
+                </a>
+
+            {% endif %}
+
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =========================
+         ОРГАНИЗАЦИИ
+         ========================= -->
+
+    <div class="card">
+
+
+        <div class="section">
+
+
+            <h2 class="section-title">
+                Организации
+            </h2>
+
+
+            <div class="grid">
+
+
+                <div class="field">
+
+                    <div class="label">
+                        Заказчик
+                    </div>
+
+                    <div class="value">
+
+                        {% if act.customer %}
+
+                            {{ act.customer }}
+
+                        {% else %}
+
+                            <span class="empty-value">
+                                Не указан
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <div class="label">
+                        Подрядчик
+                    </div>
+
+                    <div class="value">
+
+                        {% if act.contractor %}
+
+                            {{ act.contractor }}
+
+                        {% else %}
+
+                            <span class="empty-value">
+                                Не указан
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =========================
+             ОБЪЕКТ
+             ========================= -->
+
+        <div class="section">
+
+
+            <h2 class="section-title">
+                Объект и проект
+            </h2>
+
+
+            <div class="grid">
+
+
+                <div class="field">
+
+                    <div class="label">
+                        Объект
+                    </div>
+
+                    <div class="value">
+                        {{ act.object_name|default:"Не указан" }}
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <div class="label">
+                        Позиция
+                    </div>
+
+                    <div class="value">
+                        {{ act.position_name|default:"Не указана" }}
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <div class="label">
+                        Шифр проекта
+                    </div>
+
+                    <div class="value">
+                        {{ act.project_code|default:"Не указан" }}
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <div class="label">
+                        Участок / привязка / км / ПК
+                    </div>
+
+                    <div class="value">
+                        {{ act.construction_section|default:"Не указан" }}
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <div class="label">
+                        Проект / чертёж
+                    </div>
+
+                    <div class="value">
+                        {{ act.project_document|default:"Не указан" }}
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <div class="label">
+                        Дата проекта / чертежа
+                    </div>
+
+                    <div class="value">
+
+                        {% if act.project_document_date %}
+
+                            {{ act.project_document_date|date:"d.m.Y" }}
+
+                        {% else %}
+
+                            Не указана
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <div class="field field-full">
+
+                    <div class="label">
+                        Рабочие чертежи
+                    </div>
+
+                    <div class="value">
+                        {{ act.working_drawings|default:"Не указаны" }}
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =========================
+             ИЗДЕЛИЯ
+             ========================= -->
+
+        <div class="section">
+
+
+            <h2 class="section-title">
+                Изделия
+            </h2>
+
+
+            <div class="grid">
+
+
+                <div class="field">
+
+                    <div class="label">
+                        Вид изделий
+                    </div>
+
+                    <div class="value">
+                        {{ act.product_type|default:"Не указан" }}
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <div class="label">
+                        Наименование изделий
+                    </div>
+
+                    <div class="value">
+                        {{ act.product_name|default:act.material.name }}
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <div class="label">
+                        Вид проверки
+                    </div>
+
+                    <div class="value">
+                        {{ act.get_inspection_type_display }}
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <div class="label">
+                        Материал
+                    </div>
+
+                    <div class="value">
+                        {{ act.material.name }}
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =========================
+             РЕЗУЛЬТАТЫ ПРОВЕРКИ
+             ========================= -->
+
+        <div class="section">
+
+
+            <h2 class="section-title">
+                Результаты проверки
+            </h2>
+
+
+            <div class="grid">
+
+
+                <div class="field">
+
+                    <div class="label">
+                        Геометрические размеры
+                    </div>
+
+                    <div class="value">
+                        {{ act.geometric_dimensions|default:"Не указаны" }}
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <div class="label">
+                        Маркировка
+                    </div>
+
+                    <div class="value">
+                        {{ act.marking|default:"Не указана" }}
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <div class="label">
+                        Технические условия
+                    </div>
+
+                    <div class="value">
+                        {{ act.technical_conditions|default:"Не указаны" }}
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <div class="label">
+                        Соответствие
+                    </div>
+
+                    <div class="value">
+                        {{ act.compliance_result|default:"Не указано" }}
+                    </div>
+
+                </div>
+
+
+                <div class="field field-full">
+
+                    <div class="label">
+                        Требования проекта
+                    </div>
+
+                    <div class="value">
+                        {{ act.project_requirements|default:"Не указаны" }}
+                    </div>
+
+                </div>
+
+
+                <div class="field field-full">
+
+                    <div class="label">
+                        Требования технических условий
+                    </div>
+
+                    <div class="value">
+                        {{ act.technical_requirements|default:"Не указаны" }}
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =========================
+             ДОКУМЕНТАЦИЯ
+             ========================= -->
+
+        <div class="section">
+
+
+            <h2 class="section-title">
+                Сопроводительная документация
+            </h2>
+
+
+            <div class="grid">
+
+
+                <div class="field field-full">
+
+                    <div class="label">
+                        Документы
+                    </div>
+
+                    <div class="value">
+                        {{ act.accompanying_documents|default:"Не указаны" }}
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <div class="label">
+                        Комплектность
+                    </div>
+
+
+                    {% if act.documents_complete %}
+
+                        <span class="complete complete-yes">
+                            ✓ В полном комплекте
+                        </span>
+
+                    {% else %}
+
+                        <span class="complete complete-no">
+                            ✕ Не в полном комплекте
+                        </span>
+
+                    {% endif %}
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =========================
+             МЕХАНИЧЕСКИЕ СВОЙСТВА
+             ========================= -->
+
+        <div class="section">
+
+
+            <h2 class="section-title">
+                Механические свойства
+            </h2>
+
+
+            <div class="grid">
+
+
+                <div class="field">
+
+                    <div class="label">
+                        Характеристики
+                    </div>
+
+                    <div class="value">
+                        {{ act.mechanical_properties|default:"Не указаны" }}
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <div class="label">
+                        Результат проверки
+                    </div>
+
+                    <div class="value">
+                        {{ act.mechanical_properties_result|default:"Не указан" }}
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =========================
+             ЗАКЛЮЧЕНИЕ
+             ========================= -->
+
+        <div class="section">
+
+
+            <h2 class="section-title">
+                Заключение
+            </h2>
+
+
+            <div class="result-box">
+
+
+                <div class="result-title">
+                    Итоговое заключение
+                </div>
+
+
+                <div class="value">
+
+                    {{ act.conclusion|default:"Заключение не заполнено." }}
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =========================
+             ПОДПИСАНТЫ
+             ========================= -->
+
+        <div class="section">
+
+
+            <h2 class="section-title">
+                Представители
+            </h2>
+
+
+            <div class="grid">
+
+
+                <div class="signature">
+
+
+                    <div class="signature-title">
+                        Строительная организация
+                    </div>
+
+
+                    <div class="signature-row">
+
+                        <span class="signature-label">
+                            Должность:
+                        </span>
+
+                        {{ act.contractor_position|default:"Не указана" }}
+
+                    </div>
+
+
+                    <div class="signature-row">
+
+                        <span class="signature-label">
+                            Представитель:
+                        </span>
+
+                        {{ act.contractor_representative|default:"Не указан" }}
+
+                    </div>
+
+
+                    <div class="signature-row">
+
+                        <span class="signature-label">
+                            Дата:
+                        </span>
+
+
+                        {% if act.contractor_signature_date %}
+
+                            {{ act.contractor_signature_date|date:"d.m.Y" }}
+
+                        {% else %}
+
+                            Не указана
+
+                        {% endif %}
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="signature">
+
+
+                    <div class="signature-title">
+                        Заказчик
+                    </div>
+
+
+                    <div class="signature-row">
+
+                        <span class="signature-label">
+                            Должность:
+                        </span>
+
+                        {{ act.customer_position|default:"Не указана" }}
+
+                    </div>
+
+
+                    <div class="signature-row">
+
+                        <span class="signature-label">
+                            Представитель:
+                        </span>
+
+                        {{ act.customer_representative|default:"Не указан" }}
+
+                    </div>
+
+
+                    <div class="signature-row">
+
+                        <span class="signature-label">
+                            Дата:
+                        </span>
+
+
+                        {% if act.customer_signature_date %}
+
+                            {{ act.customer_signature_date|date:"d.m.Y" }}
+
+                        {% else %}
+
+                            Не указана
+
+                        {% endif %}
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =========================
+             ПОДПИСАННЫЙ ФАЙЛ
+             ========================= -->
+
+        <div class="section">
+
+
+            <h2 class="section-title">
+                Подписанный АоРПИ
+            </h2>
+
+
+            {% if act.signed_file %}
+
+
+                <div class="file-box">
+
+
+                    <div class="file-info">
+
+                        <div class="file-icon">
+                            📄
+                        </div>
+
+
+                        <div class="file-name">
+                            Подписанный АоРПИ
+                        </div>
+
+                    </div>
+
+
+                    <a
+                        href="{{ act.signed_file.url }}"
+                        target="_blank"
+                        class="file-link"
+                    >
+                        Открыть файл →
+                    </a>
+
+
+                </div>
+
+
+            {% else %}
+
+
+                <div class="no-file">
+
+                    ⚠ Подписанный файл ещё не загружен.
+
+                </div>
+
+
+            {% endif %}
+
+
+        </div>
+
+
+        <!-- =========================
+             НИЖНИЕ КНОПКИ
+             ========================= -->
+
+        <div class="bottom-actions">
+
+
+            <a
+                href="{% url 'project_code_detail' project_code_id=act.material.project_code.id %}"
+                class="button button-secondary"
+            >
+                ← К материалу
+            </a>
+
+
+            <div class="actions">
+
+
+                <a
+                    href="{% url 'material_act_generate' act_id=act.id %}"
+                    class="button button-success"
+                >
+                    📄 Скачать Word
+                </a>
+
+                {% if user_is_admin or user_is_vkh %}
+                    <a
+                        href="{% url 'material_act_edit' act_id=act.id %}"
+                        class="button button-primary"
+                    >
+                        ✏ Редактировать АоРПИ
+                    </a>
+                {% endif %}
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {{ status_name }} — МТР-Контроль
+    </title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+
+            padding: 30px;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background: #f4f6f8;
+
+            color: #1f2937;
+        }
+
+
+        .container {
+            max-width: 1400px;
+
+            margin: 0 auto;
+        }
+
+
+        .back {
+            display: inline-block;
+
+            margin-bottom: 20px;
+
+            color: #2563eb;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 500;
+        }
+
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+
+        .card {
+            background: white;
+
+            border-radius: 14px;
+
+            padding: 25px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.06);
+        }
+
+
+        .header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 20px;
+
+            margin-bottom: 25px;
+        }
+
+
+        h1 {
+            margin: 0;
+
+            font-size: 27px;
+
+            color: #111827;
+        }
+
+
+        .count {
+            color: #9ca3af;
+
+            font-size: 13px;
+
+            margin-top: 6px;
+        }
+
+
+        .table-wrapper {
+            overflow-x: auto;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 10px;
+        }
+
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 1000px;
+        }
+
+
+        th {
+            padding: 13px 15px;
+
+            text-align: left;
+
+            background: #f8fafc;
+
+            color: #64748b;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+
+        td {
+            padding: 14px 15px;
+
+            border-bottom: 1px solid #eef0f2;
+
+            font-size: 14px;
+        }
+
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+
+        .material-name {
+            color: #111827;
+
+            font-weight: 600;
+
+            max-width: 550px;
+        }
+
+
+        .project-code {
+            color: #2563eb;
+
+            font-weight: 600;
+        }
+
+
+        .supplier {
+            color: #4b5563;
+        }
+
+
+        .open {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 8px 12px;
+
+            background: #eff6ff;
+
+            color: #2563eb;
+
+            text-decoration: none;
+
+            border-radius: 7px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+
+        .open:hover {
+            background: #dbeafe;
+        }
+
+
+        .empty {
+            padding: 60px 20px;
+
+            text-align: center;
+
+            color: #9ca3af;
+        }
+
+
+        @media (max-width: 700px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .card {
+                padding: 18px;
+            }
+
+            .header {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <a
+        href="{% url 'home' %}"
+        class="back"
+    >
+        ← Вернуться на главную
+    </a>
+
+
+    <div class="card">
+
+
+        <div class="header">
+
+
+            <div>
+
+                <h1>
+                    {{ status_name }}
+                </h1>
+
+                <div class="count">
+
+                    Найдено материалов:
+                    {{ materials|length }}
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        {% if materials %}
+
+
+            <div class="table-wrapper">
+
+
+                <table>
+
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Наименование МТР
+                            </th>
+
+                            <th>
+                                Шифр
+                            </th>
+
+                            <th>
+                                Позиция
+                            </th>
+
+                            <th>
+                                Объект
+                            </th>
+
+                            <th>
+                                Количество
+                            </th>
+
+                            <th>
+                                Ед. изм.
+                            </th>
+
+                            <th>
+                                Поставщик
+                            </th>
+
+                            <th>
+                                Действие
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                    {% for material in materials %}
+
+
+                        <tr>
+
+
+                            <td>
+
+                                <div class="material-name">
+
+                                    {{ material.name }}
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="project-code">
+
+                                    {{ material.project_code.code }}
+
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                {{ material.project_code.position.name }}
+
+                            </td>
+
+
+                            <td>
+
+                                {{ material.project_code.position.object.name }}
+
+                            </td>
+
+
+                            <td>
+
+                                {{ material.quantity }}
+
+                            </td>
+
+
+                            <td>
+
+                                {{ material.get_unit_display }}
+
+                            </td>
+
+
+                            <td>
+
+                                {% if material.supplier %}
+
+                                    <span class="supplier">
+
+                                        {{ material.supplier.name }}
+
+                                    </span>
+
+                                {% else %}
+
+                                    —
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td>
+
+                                <a
+                                    href="{% url 'material_detail' material.id %}"
+                                    class="open"
+                                >
+                                    Открыть
+                                </a>
+
+                            </td>
+
+
+                        </tr>
+
+
+                    {% endfor %}
+
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
+
+        {% else %}
+
+
+            <div class="empty">
+
+                Для данного статуса материалов пока нет.
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
