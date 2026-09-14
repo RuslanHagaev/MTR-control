@@ -203,6 +203,16 @@ urlpatterns = [
         views.material_act_delete,
         name="material_act_delete",
     ),
+    path(
+        "material-document/<int:document_id>/download/",
+        views.material_document_download,
+        name="material_document_download",
+    ),
+    path(
+        "normative-document/<int:document_id>/download/",
+        views.normative_document_download,
+        name="normative_document_download",
+    ),
 ]
 
 

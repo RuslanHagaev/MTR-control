@@ -398,7 +398,7 @@
                 <div class="actions">
 
                     <a
-                        href="{{ document.file.url }}"
+                        href="{% url 'material_document_download' document_id=document.id %}"
                         target="_blank"
                         class="open"
                     >

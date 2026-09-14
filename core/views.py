@@ -1354,6 +1354,30 @@ def material_act_edit(request, act_id):
     )
 
 
+def material_document_download(request, document_id):
+
+    document = get_object_or_404(
+        MaterialDocument,
+        id=document_id
+    )
+
+    material = document.material
+
+    if not can_view_material(
+        request.user,
+        material
+    ):
+        return permission_denied(
+            request,
+            "У вас нет доступа к этому документу."
+        )
+
+    return FileResponse(
+        document.file.open("rb"),
+        as_attachment=False,
+        filename=document.name,
+    )
+
 # ============================================================
 # УДАЛЕНИЕ АоРПИ
 # ============================================================
@@ -1500,3 +1524,15 @@ def normative_document_detail(
         }
     )
 
+def normative_document_download(request, document_id):
+
+    document = get_object_or_404(
+        NormativeDocument,
+        id=document_id
+    )
+
+    return FileResponse(
+        document.file.open("rb"),
+        as_attachment=False,
+        filename=document.file.name.split("/")[-1],
+    )
