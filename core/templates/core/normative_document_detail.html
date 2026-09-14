@@ -579,7 +579,7 @@
 
             {% if document.file %}
                 <a
-                    href="{{ document.file.url }}"
+                    href="{% url 'normative_document_download' document_id=document.id %}"
                     target="_blank"
                     class="pdf-open"
                 >
@@ -592,7 +592,7 @@
         {% if document.file %}
 
             <iframe
-                src="{{ document.file.url }}"
+                src="{% url 'normative_document_download' document_id=document.id %}"
                 class="pdf-viewer"
                 title="{{ document.designation }}"
             >

@@ -207,11 +207,6 @@ def can_view_document(user, document):
         user,
         document.material
     )
-def can_edit_document(user, document):
-    return can_edit_material(
-        user,
-        document.material
-    )
 
 def can_view_act(user, act):
 
@@ -220,11 +215,6 @@ def can_view_act(user, act):
         act.material
     )
 
-def can_edit_act(user, act):
-    return can_edit_material(
-        user,
-        act.material
-    )
 # ============================================================
 # ДЕКОРАТОР: ТРЕБУЕТ АВТОРИЗАЦИИ
 # ============================================================
